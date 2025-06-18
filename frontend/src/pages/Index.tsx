@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Hero from '../components/Hero';
 import About from '../components/About';
 import Projects from '../components/Projects';
@@ -8,14 +7,47 @@ import Contact from '../components/Contact';
 import Navigation from '../components/Navigation';
 
 const Index = () => {
+  // Theme switcher logic
+  // const [dark, setDark] = useState(true);
+  // useEffect(() => {
+  //   if (dark) {
+  //     document.documentElement.classList.add('dark');
+  //   } else {
+  //     document.documentElement.classList.remove('dark');
+  //   }
+  // }, [dark]);
+
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-white text-[#181c23] dark:bg-[#181c23] dark:text-white flex flex-col">
+      {/* Theme Switcher Button */}
+      {/* <button
+        className="fixed top-4 right-4 z-[9999] bg-[#23272e] border-2 border-[#4fd1c5] text-[#4fd1c5] font-mono px-4 py-2 rounded-lg shadow-lg hover:bg-[#181c23] transition-colors duration-200"
+        style={{ pointerEvents: 'auto' }}
+        onClick={() => setDark((d) => !d)}
+        aria-label="Toggle theme"
+      >
+        {dark ? '🌙 Terminal Dark' : '☀️ Classic Light'}
+      </button> */}
+      {/* Floating code characters for hacker/dev background */}
+      <span className="code-float hidden sm:inline" style={{left: '10vw', animationDelay: '0s'}}>0xDEADBEEF</span>
+      <span className="code-float hidden sm:inline" style={{left: '30vw', animationDelay: '4s'}}>&lt;script&gt;</span>
+      <span className="code-float hidden sm:inline" style={{left: '50vw', animationDelay: '8s'}}>console.log('👾')</span>
+      <span className="code-float hidden sm:inline" style={{left: '70vw', animationDelay: '2s'}}>sudo rm -rf /</span>
+      <span className="code-float hidden sm:inline" style={{left: '85vw', animationDelay: '6s'}}>#include &lt;hacker.h&gt;</span>
       <Navigation />
-      <Hero />
-      <About />
-      <Projects />
-      <Skills />
-      <Contact />
+      <main className="flex-grow">
+        <Hero />
+        <About />
+        <Projects />
+        <Skills />
+        <Contact />
+      </main>
+      {/* Terminal-style Footer */}
+      <footer className="w-full bg-[#181c23] border-t-2 border-[#4fd1c5] py-4 text-center font-mono text-xs text-[#a0aec0]">
+        <span className="text-[#4fd1c5] font-bold mr-2">$</span>
+        <span className="text-[#63b3ed] tracking-wider">echo</span>
+        <span className="ml-2">'© 2025 Adarsh Kumar Vishwakarma. All rights reserved.'</span>
+      </footer>
     </div>
   );
 };

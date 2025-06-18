@@ -40,7 +40,7 @@ class ContactController {
         data: {
           messageId: result.messageId,
           timestamp: result.timestamp,
-          fallback: result.fallback || false
+          fallback: result.fallback || false // remove this in sendgrid code
         }
       });
 

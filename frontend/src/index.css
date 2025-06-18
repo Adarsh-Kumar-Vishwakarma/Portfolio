@@ -99,5 +99,51 @@
 
   body {
     @apply bg-background text-foreground;
+    position: relative;
+    min-height: 100vh;
   }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      repeating-linear-gradient(0deg, rgba(79,209,197,0.07) 0px, rgba(79,209,197,0.07) 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(90deg, rgba(79,209,197,0.07) 0px, rgba(79,209,197,0.07) 1px, transparent 1px, transparent 40px);
+    animation: gridMove 12s linear infinite;
+  }
+
+  @keyframes gridMove {
+    0% { background-position: 0 0, 0 0; }
+    100% { background-position: 40px 40px, 40px 40px; }
+  }
+
+  /* Floating code characters */
+  .code-float {
+    position: fixed;
+    z-index: 1;
+    color: #4fd1c5;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    font-size: 1.2rem;
+    opacity: 0.13;
+    pointer-events: none;
+    animation: codeFloat 16s linear infinite;
+  }
+
+  @keyframes codeFloat {
+    0% { transform: translateY(100vh) scale(1) rotate(0deg); opacity: 0.13; }
+    80% { opacity: 0.13; }
+    100% { transform: translateY(-10vh) scale(1.2) rotate(8deg); opacity: 0; }
+  }
+}
+
+.blinking-cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink {
+  to { visibility: hidden; }
 }

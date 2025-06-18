@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Progress } from '@/components/ui/progress';
 
@@ -40,30 +39,31 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-20 bg-gray-800">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">Skills & Experience</h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            I'm proficient in a wide range of technologies and tools that help me 
-            build robust and scalable applications.
-          </p>
+    <section id="skills" className="py-10 sm:py-20 bg-[#181c23] font-mono px-2 sm:px-0">
+      <div className="max-w-6xl mx-auto px-2 sm:px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-10 sm:mb-16">
+          <div className="inline-block bg-[#23272e] border-2 border-[#4fd1c5] rounded-t-xl px-4 sm:px-6 py-2 mb-2">
+            <span className="text-[#4fd1c5] font-bold mr-2">$</span>
+            <span className="text-[#63b3ed] tracking-wider text-xs sm:text-base">cat skills.json</span>
+          </div>
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#f6e05e] mb-4 mt-2">Skills &amp; Experience</h2>
+          <p className="text-base sm:text-xl text-[#a0aec0] max-w-3xl mx-auto">// I'm proficient in a wide range of technologies and tools that help me build robust and scalable applications.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-10 sm:mb-16">
           {skillCategories.map((category, index) => (
-            <div key={index} className="bg-gray-900 p-6 rounded-lg">
-              <h3 className="text-xl font-bold text-white mb-6">{category.title}</h3>
+            <div key={index} className="bg-[#23272e] border-2 border-[#4fd1c5] p-4 sm:p-6 rounded-lg shadow-lg mb-6 md:mb-0">
+              <h3 className="text-lg sm:text-xl font-bold text-[#f6e05e] mb-6">{category.title}</h3>
               <div className="space-y-4">
                 {category.skills.map((skill, skillIndex) => (
                   <div key={skillIndex}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-300">{skill.name}</span>
-                      <span className="text-blue-400">{skill.level}%</span>
+                      <span className="text-[#a0aec0] text-xs sm:text-base">{skill.name}</span>
+                      <span className="text-[#4fd1c5] text-xs sm:text-base">{skill.level}%</span>
                     </div>
                     <Progress 
                       value={skill.level} 
-                      className="h-2 bg-gray-700"
+                      className="h-2 bg-[#181c23] [&_.progress-bar]:bg-[#4fd1c5]"
                     />
                   </div>
                 ))}
@@ -72,13 +72,13 @@ const Skills = () => {
           ))}
         </div>
 
-        <div className="bg-gray-900 p-8 rounded-lg mb-16">
-          <h3 className="text-2xl font-bold text-white mb-6 text-center">Tools & Technologies</h3>
-          <div className="flex flex-wrap justify-center gap-4">
+        <div className="bg-[#23272e] border-2 border-[#4fd1c5] p-4 sm:p-8 rounded-lg mb-10 sm:mb-16 shadow-lg">
+          <h3 className="text-lg sm:text-2xl font-bold text-[#f6e05e] mb-6 text-center">Tools &amp; Technologies</h3>
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-4">
             {tools.map((tool, index) => (
               <span 
                 key={index}
-                className="px-4 py-2 bg-gray-700 text-gray-300 rounded-full hover:bg-blue-600 hover:text-white transition-colors duration-200"
+                className="px-2 sm:px-4 py-2 bg-[#181c23] text-[#a0aec0] border border-[#4fd1c5] rounded-full hover:bg-[#4fd1c5] hover:text-[#181c23] transition-colors duration-200 font-mono text-xs sm:text-base"
               >
                 {tool}
               </span>
@@ -86,23 +86,23 @@ const Skills = () => {
           </div>
         </div>
 
-        <div className="bg-gray-900 p-8 rounded-lg">
-          <h3 className="text-2xl font-bold text-white mb-6 text-center">Professional Experience</h3>
+        <div className="bg-[#23272e] border-2 border-[#4fd1c5] p-4 sm:p-8 rounded-lg shadow-lg">
+          <h3 className="text-lg sm:text-2xl font-bold text-[#f6e05e] mb-6 text-center">Professional Experience</h3>
           <div className="space-y-8">
-            <div className="border-l-4 border-blue-400 pl-4">
-              <h4 className="text-xl text-white font-semibold">Junior Software Developer</h4>
-              <p className="text-blue-400">Edulab Educational Exchange Pvt. Ltd• 05 May 2025 - Present</p>
-              <ul className="list-disc list-inside text-gray-300 mt-2">
+            <div className="border-l-4 border-[#4fd1c5] pl-4">
+              <h4 className="text-base sm:text-xl text-[#f6e05e] font-semibold">Junior Software Developer</h4>
+              <p className="text-[#4fd1c5] text-xs sm:text-base">Edulab Educational Exchange Pvt. Ltd• 05 May 2025 - Present</p>
+              <ul className="list-disc list-inside text-[#a0aec0] mt-2 text-xs sm:text-base">
                 <li>Led development of multiple full-stack applications using React and Node.js</li>
                 <li>Mentored junior developers and conducted code reviews</li>
                 <li>Implemented CI/CD pipelines and improved deployment processes</li>
               </ul>
             </div>
-            <div className="border-l-4 border-blue-400 pl-4">
-              <h4 className="text-xl text-white font-semibold">Software Developer</h4>
-              <p className="text-blue-400">New Era It Consultancy • Feb 2024 - Feb2025</p>
-              <ul className="list-disc list-inside text-gray-300 mt-2">
-                <li>Developed, deployed, and maintained Customer Relationship Management (CRM) software solutions for clients such as Reliance, Mapple, and iPlanet,creating streamlined and impactful products tailored to meet each client’s specific needs.</li>
+            <div className="border-l-4 border-[#4fd1c5] pl-4">
+              <h4 className="text-base sm:text-xl text-[#f6e05e] font-semibold">Software Developer</h4>
+              <p className="text-[#4fd1c5] text-xs sm:text-base">New Era It Consultancy • Feb 2024 - Feb2025</p>
+              <ul className="list-disc list-inside text-[#a0aec0] mt-2 text-xs sm:text-base">
+                <li>Developed, deployed, and maintained Customer Relationship Management (CRM) software solutions for clients such as Reliance, Mapple, and iPlanet,creating streamlined and impactful products tailored to meet each client's specific needs.</li>
                 <li>Created user-friendly, efficient, and effective solutions with expertise in the Angular framework.</li>
                 <li>Collaborated closely with clients to deliver customized software solutions that address their unique requirements.</li>
                 <li>Gained hands-on experience with Angular fundamentals, including component creation, routing, API integration, and services, while also working with stored procedures in SQL for systematic data management.</li>

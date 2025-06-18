@@ -33,6 +33,7 @@ class GmailEmailService {
     }
 
     const { name, email, subject, message } = contactData;
+    console.log(contactData);
     const toEmail = process.env.YOUR_EMAIL || 'adarshvish2606@gmail.com';
 
     try {
@@ -96,13 +97,13 @@ class GmailEmailService {
 
   createContactEmailTemplate(contactData, fallback = false) {
     const { name, email, subject, message } = contactData;
-    
+
     const fallbackNotice = fallback ? `
-      <div style="background-color: #fef3c7; border: 1px solid #f59e0b; padding: 10px; border-radius: 4px; margin-bottom: 15px;">
-        <strong>Note:</strong> This message was sent via portfolio system. Reply to this email to respond to ${name} at ${email}.
+      <div style="background-color: #2d3748; color: #f6e05e; border: 1px solid #f6e05e; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-family: 'Fira Mono', 'Consolas', monospace;">
+        <strong>Note:</strong> This message was sent via portfolio system. Reply to this email to respond to <span style="color:#63b3ed;">${name}</span> at <span style="color:#63b3ed;">${email}</span>.
       </div>
     ` : '';
-    
+
     return `
       <!DOCTYPE html>
       <html lang="en">
@@ -110,52 +111,101 @@ class GmailEmailService {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>New Contact Form Submission</title>
+        <link href="https://fonts.googleapis.com/css?family=Fira+Mono:400,700&display=swap" rel="stylesheet">
         <style>
-          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
-          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-          .header { background-color: #2563eb; color: white; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-          .content { background-color: #f8fafc; padding: 20px; border-radius: 0 0 8px 8px; }
-          .field { margin-bottom: 15px; }
-          .field-label { font-weight: bold; color: #374151; }
-          .field-value { background-color: white; padding: 10px; border-radius: 4px; border-left: 4px solid #2563eb; }
-          .message-box { background-color: white; padding: 15px; border-radius: 4px; border: 1px solid #e5e7eb; margin-top: 10px; }
-          .footer { text-align: center; margin-top: 20px; color: #6b7280; font-size: 14px; }
+          body {
+            background: #1a202c;
+            color: #f7fafc;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+            margin: 0;
+            padding: 0;
+          }
+          .container {
+            max-width: 700px;
+            margin: 40px auto;
+            background: #2d3748;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #000a;
+            padding: 32px;
+          }
+          .header {
+            color: #63b3ed;
+            font-size: 2em;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+          }
+          .subtitle {
+            color: #f6e05e;
+            font-size: 1.1em;
+            margin-bottom: 24px;
+          }
+          .field {
+            margin-bottom: 18px;
+          }
+          .field-label {
+            color: #f6e05e;
+            font-weight: bold;
+            font-size: 1em;
+          }
+          .field-value {
+            background: #1a202c;
+            color: #f7fafc;
+            padding: 10px 16px;
+            border-radius: 4px;
+            border-left: 4px solid #63b3ed;
+            font-size: 1.05em;
+            margin-top: 4px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+          }
+          .message-box {
+            background: #1a202c;
+            color: #f7fafc;
+            padding: 18px;
+            border-radius: 4px;
+            border: 1px solid #4fd1c5;
+            font-size: 1.1em;
+            margin-top: 10px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+          }
+          .footer {
+            text-align: center;
+            margin-top: 32px;
+            color: #718096;
+            font-size: 0.95em;
+          }
+          .ascii-art {
+            color: #4fd1c5;
+            font-size: 1.2em;
+            text-align: center;
+            margin-bottom: 24px;
+            font-family: 'Fira Mono', 'Consolas', monospace;
+          }
         </style>
       </head>
       <body>
         <div class="container">
-          <div class="header">
-            <h1>New Contact Form Submission</h1>
-            <p>Someone has reached out through your portfolio</p>
+          <div class="header">New Portfolio Contact</div>
+          <div class="subtitle">A message from your digital terminal...</div>
+          ${fallbackNotice}
+          <div class="field">
+            <div class="field-label">Name:</div>
+            <div class="field-value">${name}</div>
           </div>
-          
-          <div class="content">
-            ${fallbackNotice}
-            
-            <div class="field">
-              <div class="field-label">Name:</div>
-              <div class="field-value">${name}</div>
-            </div>
-            
-            <div class="field">
-              <div class="field-label">Email:</div>
-              <div class="field-value">${email}</div>
-            </div>
-            
-            <div class="field">
-              <div class="field-label">Subject:</div>
-              <div class="field-value">${subject}</div>
-            </div>
-            
-            <div class="field">
-              <div class="field-label">Message:</div>
-              <div class="message-box">${message.replace(/\n/g, '<br>')}</div>
-            </div>
+          <div class="field">
+            <div class="field-label">Email:</div>
+            <div class="field-value">${email}</div>
           </div>
-          
+          <div class="field">
+            <div class="field-label">Subject:</div>
+            <div class="field-value">${subject}</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Message:</div>
+            <div class="message-box">${message.replace(/\n/g, '<br>')}</div>
+          </div>
           <div class="footer">
-            <p>This message was sent from your portfolio contact form at ${new Date().toLocaleString()}</p>
-            <p>Reply directly to this email to respond to ${name}</p>
+            <p>// This message was sent from your portfolio contact form at ${new Date().toLocaleString()}</p>
+            <p>// Reply directly to this email to respond to <span style="color:#63b3ed;">${name}</span></p>
           </div>
         </div>
       </body>
