@@ -24,6 +24,13 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
+// Verify production mode
+if (NODE_ENV === 'production') {
+  console.log('🚀 Server running in PRODUCTION mode');
+} else {
+  console.warn('⚠️ Server running in DEVELOPMENT mode');
+}
+
 // Debug environment variables
 console.log('🔍 Environment check on server start:');
 // console.log('  - SENDGRID_API_KEY:', process.env.SENDGRID_API_KEY ? 'Present' : 'Missing');
@@ -47,7 +54,9 @@ app.use(helmet({
 
 // CORS configuration
 const corsOptions = {
-  origin: '*',
+  origin: NODE_ENV === 'production' 
+    ? ['https://adarsh-kumar-vishwakarma.github.io']
+    : '*',
   credentials: false,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
