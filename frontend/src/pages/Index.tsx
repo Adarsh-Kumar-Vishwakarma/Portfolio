@@ -29,11 +29,16 @@ const Index = () => {
         {dark ? '🌙 Terminal Dark' : '☀️ Classic Light'}
       </button> */}
       {/* Floating code characters for hacker/dev background */}
-      <span className="code-float hidden sm:inline" style={{left: '10vw', animationDelay: '0s'}}>0xDEADBEEF</span>
-      <span className="code-float hidden sm:inline" style={{left: '30vw', animationDelay: '4s'}}>&lt;script&gt;</span>
-      <span className="code-float hidden sm:inline" style={{left: '50vw', animationDelay: '8s'}}>console.log('👾')</span>
-      <span className="code-float hidden sm:inline" style={{left: '70vw', animationDelay: '2s'}}>sudo rm -rf /</span>
-      <span className="code-float hidden sm:inline" style={{left: '85vw', animationDelay: '6s'}}>#include &lt;hacker.h&gt;</span>
+      <span className="code-float" style={{left: '5vw', animationDelay: '0s'}}>0xDEADBEEF</span>
+      <span className="code-float" style={{left: '15vw', animationDelay: '2s'}}>&lt;script&gt;</span>
+      <span className="code-float" style={{left: '25vw', animationDelay: '4s'}}>console.log('👾')</span>
+      <span className="code-float" style={{left: '35vw', animationDelay: '6s'}}>sudo rm -rf /</span>
+      <span className="code-float" style={{left: '45vw', animationDelay: '8s'}}>#include &lt;hacker.h&gt;</span>
+      <span className="code-float" style={{left: '55vw', animationDelay: '1s'}}>npm install life</span>
+      <span className="code-float" style={{left: '65vw', animationDelay: '3s'}}>while(alive)</span>
+      <span className="code-float" style={{left: '75vw', animationDelay: '5s'}}>git commit -m "🚀"</span>
+      <span className="code-float" style={{left: '85vw', animationDelay: '7s'}}>function hack(){}</span>
+      <span className="code-float" style={{left: '95vw', animationDelay: '9s'}}>SELECT * FROM skills;</span>
       <Navigation />
       <main className="flex-grow">
         <Hero />

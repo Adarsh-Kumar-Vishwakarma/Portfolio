@@ -126,15 +126,17 @@
     z-index: 1;
     color: #4fd1c5;
     font-family: 'Fira Mono', 'Consolas', monospace;
-    font-size: 1.2rem;
-    opacity: 0.13;
+    font-size: clamp(0.8rem, 2vw, 1.2rem);
+    opacity: 0.2;
     pointer-events: none;
     animation: codeFloat 16s linear infinite;
+    display: inline;
+    white-space: nowrap;
   }
 
   @keyframes codeFloat {
-    0% { transform: translateY(100vh) scale(1) rotate(0deg); opacity: 0.13; }
-    80% { opacity: 0.13; }
+    0% { transform: translateY(100vh) scale(1) rotate(0deg); opacity: 0.2; }
+    80% { opacity: 0.2; }
     100% { transform: translateY(-10vh) scale(1.2) rotate(8deg); opacity: 0; }
   }
 }

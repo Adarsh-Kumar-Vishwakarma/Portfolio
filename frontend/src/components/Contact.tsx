@@ -56,7 +56,9 @@ const Contact = () => {
       // Show sending message
       terminalErrorToast('Establishing connection to server...', 'info');
 
-      const response = await fetch('http://localhost:3001/api/contact', {
+      const response = await fetch(import.meta.env.MODE === 'production'
+        ? 'https://portfolio-backend-691fxv5v1-adarsh-kumar-vishwakarmas-projects.vercel.app/api/contact'
+        : 'http://localhost:3001/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
