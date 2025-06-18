@@ -14,6 +14,7 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // API URL configuration for production/development environments
   const API_URL = window.location.hostname === 'localhost' 
     ? 'http://localhost:3001/api/contact'
     : 'https://portfolio-backend-691fxv5v1-adarsh-kumar-vishwakarmas-projects.vercel.app/api/contact';
