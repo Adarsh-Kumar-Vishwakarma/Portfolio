@@ -17,7 +17,7 @@ const Contact = () => {
   // API URL configuration for production/development environments
   const API_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:3001/api/contact'
-  : 'https://portfolio-cyan-rho-13.vercel.app/api/contact'; // <-- use your new backend URL
+  : 'https://portfolio-kkhvnuqmm-adarsh-kumar-vishwakarmas-projects.vercel.app/api/contact'; // <-- use new backend URL
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
