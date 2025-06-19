@@ -21,6 +21,10 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+
+// Allow preflight CORS requests for all routes
+app.options('*', cors());
+
 const PORT = process.env.PORT || 3001;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -86,8 +90,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Allow preflight CORS requests for all routes
-app.options('*', cors());
+
 
 // Initialize email service
 try {
