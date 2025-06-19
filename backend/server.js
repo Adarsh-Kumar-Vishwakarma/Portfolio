@@ -86,6 +86,9 @@ app.use((req, res, next) => {
   next();
 });
 
+// Allow preflight CORS requests for all routes
+app.options('*', cors());
+
 // Initialize email service
 try {
   // console.log('🚀 Starting email service initialization...');
