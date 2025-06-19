@@ -16,4 +16,9 @@ router.post('/contact',
 // GET /api/contact/health - Health check for contact service
 router.get('/contact/health', contactController.getContactHealth);
 
+// Handle OPTIONS for /contact (CORS preflight)
+router.options('/contact', (req, res) => {
+  res.sendStatus(200);
+});
+
 export default router; 
