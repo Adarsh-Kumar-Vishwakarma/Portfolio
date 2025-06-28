@@ -119,7 +119,7 @@ const Skills = () => {
           <div className="space-y-8">
             <div className="border-l-4 border-[#4fd1c5] pl-4">
               <h4 className="text-base sm:text-xl text-[#f6e05e] font-semibold">Junior Software Developer</h4>
-              <p className="text-[#4fd1c5] text-xs sm:text-base">Edulab Educational Exchange Pvt. Ltd• 05 May 2025 - Present</p>
+              <p className="text-[#4fd1c5] text-xs sm:text-base">Edulab Educational Exchange Pvt. Ltd • 05 May 2025 - Present</p>
               <ul className="list-disc list-inside text-[#a0aec0] mt-2 text-xs sm:text-base">
                 <li>Led development of multiple full-stack applications using React and Node.js</li>
                 <li>Mentored junior developers and conducted code reviews</li>
