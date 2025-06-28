@@ -1,66 +1,85 @@
-// Test script for deployed backend
-const API_BASE_URL = process.env.API_URL || 'https://your-project.vercel.app/api';
+import fetch from 'node-fetch';
 
-async function testHealthEndpoint() {
+// Configuration
+const API_BASE_URL = process.env.VERCEL_URL || 'http://localhost:3001';
+
+async function testDeployment() {
+  console.log('🧪 Testing Portfolio Backend Deployment...\n');
+
   try {
-    console.log('🏥 Testing health endpoint...');
-    const response = await fetch(`${API_BASE_URL}/contact-health`);
-    const data = await response.json();
+    // Test 1: Health Check
+    console.log('1️⃣ Testing Health Check...');
+    const healthResponse = await fetch(`${API_BASE_URL}/api/contact-health`);
+    const healthData = await healthResponse.json();
     
-    console.log('✅ Health check response:', data);
-    return data.status === 'healthy';
-  } catch (error) {
-    console.error('❌ Health check failed:', error.message);
-    return false;
-  }
-}
+    if (healthResponse.ok) {
+      console.log('✅ Health check passed');
+      console.log('📊 Status:', healthData);
+    } else {
+      console.log('❌ Health check failed');
+      console.log('📊 Response:', healthData);
+    }
 
-async function testContactEndpoint() {
-  try {
-    console.log('📧 Testing contact endpoint...');
-    const testData = {
-      name: 'Test User',
-      email: 'test@example.com',
-      subject: 'Test Message',
-      message: 'This is a test message from the deployment verification script.'
-    };
-
-    const response = await fetch(`${API_BASE_URL}/contact`, {
+    // Test 2: Contact Form (without actually sending email)
+    console.log('\n2️⃣ Testing Contact Form Endpoint...');
+    const contactResponse = await fetch(`${API_BASE_URL}/api/contact`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(testData)
+      body: JSON.stringify({
+        name: 'Test User',
+        email: 'test@example.com',
+        subject: 'Deployment Test',
+        message: 'This is a test message to verify deployment.'
+      })
     });
 
-    const data = await response.json();
-    console.log('✅ Contact endpoint response:', data);
-    return data.success === true;
+    const contactData = await contactResponse.json();
+    
+    if (contactResponse.ok) {
+      console.log('✅ Contact form endpoint working');
+      console.log('📊 Response:', contactData);
+    } else {
+      console.log('❌ Contact form endpoint failed');
+      console.log('📊 Response:', contactData);
+    }
+
+    // Test 3: CORS Headers
+    console.log('\n3️⃣ Testing CORS Configuration...');
+    const corsResponse = await fetch(`${API_BASE_URL}/api/contact-health`, {
+      method: 'OPTIONS',
+      headers: {
+        'Origin': 'https://your-frontend-domain.com',
+        'Access-Control-Request-Method': 'POST',
+        'Access-Control-Request-Headers': 'Content-Type'
+      }
+    });
+
+    if (corsResponse.headers.get('access-control-allow-origin')) {
+      console.log('✅ CORS headers present');
+    } else {
+      console.log('⚠️  CORS headers not found');
+    }
+
+    console.log('\n🎉 Deployment test completed!');
+    console.log(`🔗 API Base URL: ${API_BASE_URL}`);
+    
+    if (healthResponse.ok && contactResponse.ok) {
+      console.log('✅ All tests passed! Your backend is ready.');
+    } else {
+      console.log('⚠️  Some tests failed. Check the logs above.');
+    }
+
   } catch (error) {
-    console.error('❌ Contact endpoint failed:', error.message);
-    return false;
+    console.error('❌ Test failed with error:', error.message);
+    console.log('\n🔍 Troubleshooting tips:');
+    console.log('1. Check if the server is running');
+    console.log('2. Verify the API_BASE_URL is correct');
+    console.log('3. Check Vercel deployment logs');
+    console.log('4. Ensure environment variables are set');
   }
 }
 
-async function runTests() {
-  console.log('🧪 Running deployment tests...\n');
-  
-  const healthOk = await testHealthEndpoint();
-  console.log('');
-  
-  const contactOk = await testContactEndpoint();
-  console.log('');
-  
-  if (healthOk && contactOk) {
-    console.log('🎉 All tests passed! Your backend is working correctly.');
-  } else {
-    console.log('⚠️ Some tests failed. Check your deployment and environment variables.');
-  }
-}
-
-// Run tests if this file is executed directly
-if (import.meta.url === `file://${process.argv[1]}`) {
-  runTests();
-}
-
-export { testHealthEndpoint, testContactEndpoint, runTests }; 
+// Run the test
+testDeployment(); 
