@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Mail, Phone, MapPin, Send, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import SystemStatusBar from './SystemStatusBar';
+import { useInView } from '../hooks/use-in-view';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -104,37 +106,41 @@ const Contact = () => {
     }
   };
 
+  // Typewriter effect for the intro
+  const introText = "# I'm always interested in new opportunities and exciting projects. Let's discuss how we can work together!";
+  const [typedIntro, setTypedIntro] = useState('');
+  const [contactRef, inView] = useInView<HTMLDivElement>({ threshold: 0.3 });
+  useEffect(() => {
+    if (!inView) return;
+    let i = 0;
+    setTypedIntro('');
+    const interval = setInterval(() => {
+      setTypedIntro(introText.slice(0, i + 1));
+      i++;
+      if (i === introText.length) clearInterval(interval);
+    }, 12);
+    return () => clearInterval(interval);
+  }, [inView]);
+
   return (
-    <section id="contact" className="py-10 sm:py-20 bg-gray-900 px-2 sm:px-0">
-      <div className="max-w-6xl mx-auto px-2 sm:px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-10 sm:mb-16">
-          <div className="inline-flex items-center gap-2 mb-6 font-mono">
-            <span className="text-[#4fd1c5] font-bold">$</span>
-            <span className="text-[#63b3ed] tracking-wider">./contact</span>
-            <span className="text-[#f6e05e]">--init</span>
-          </div>
-          <pre className="text-[#4fd1c5] text-sm leading-4 select-none mb-6">
-{`   _____            _             _   
-  / ____|          | |           | |  
- | |     ___  _ __ | |_ __ _  ___| |_ 
- | |    / _ \\| '_ \\| __/ _\` |/ __| __|
- | |___| (_) | | | | || (_| | (__| |_ 
-  \\_____\\___/|_| |_|\\__\\__,_|\\___|\\__|`}
-          </pre>
-          <div className="font-mono text-[#a0aec0] text-sm mb-8">
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-[#4fd1c5]">[INFO]</span>
-              <span>Initializing contact protocols...</span>
+    <section className="py-10 sm:py-20 bg-[#181c23] font-mono px-2 sm:px-0 relative overflow-hidden">
+      {/* Animated grid/scanline overlay */}
+      <div className="pointer-events-none absolute inset-0 z-0 opacity-30" style={{backgroundImage: 'repeating-linear-gradient(to bottom, #4fd1c511 0px, #4fd1c511 1px, transparent 1px, transparent 24px), repeating-linear-gradient(to right, #4fd1c511 0px, #4fd1c511 1px, transparent 1px, transparent 24px)'}} />
+      <div className="max-w-6xl mx-auto px-2 sm:px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-10 sm:mb-16" ref={contactRef}>
+          <div id="contact" className="inline-flex flex-col items-center gap-2 mb-6 font-mono scroll-mt-20 bg-[#23272e] border-2 border-[#4fd1c5] rounded-t-xl px-4 sm:px-6 py-2">
+            <div className="flex items-center gap-2">
+              <span className="text-[#4fd1c5] font-bold">$</span>
+              <span className="text-[#63b3ed] tracking-wider">./contact --init</span>
             </div>
-            <div className="flex items-center justify-center gap-2">
-              <span className="text-[#f6e05e]">[STATUS]</span>
-              <span>Ready to establish connection</span>
-            </div>
+            <SystemStatusBar />
           </div>
-          <p className="text-base sm:text-lg font-mono text-[#a0aec0] max-w-3xl mx-auto">
-            <span className="text-[#4fd1c5]"># </span>
-            I'm always interested in new opportunities and exciting projects. 
-            Let's discuss how we can work together!
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#f6e05e] mb-4 mt-2 flex items-center justify-center">
+            Contact <span className="ml-2 animate-pulse">|</span>
+          </h2>
+          <p className="text-base sm:text-xl text-[#a0aec0] max-w-3xl mx-auto min-h-[3.5em]">
+            <span>{typedIntro}</span>
+            {typedIntro.length < introText.length && <span className="blinking-cursor">|</span>}
           </p>
         </div>
 
@@ -311,6 +317,9 @@ const Contact = () => {
             {/* © 2025 Adarsh Kumar Vishwakarma. Built with React and Tailwind CSS. */}
           </p>
         </div>
+
+        {/* Blinking cursor global style */}
+        <style>{`.blinking-cursor{display:inline-block;width:1ch;animation:blink 1s steps(2,start) infinite;}@keyframes blink{to{visibility:hidden;}}`}</style>
       </div>
     </section>
   );
