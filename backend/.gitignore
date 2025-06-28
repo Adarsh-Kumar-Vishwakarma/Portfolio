@@ -6,12 +6,18 @@ yarn-error.log*
 package-lock.json
 yarn.lock
 
-# Environment variables
+# Environment variables - CRITICAL: Never commit these!
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*
+!.env.example
+
+# Vercel specific
+.vercel/
+.vercelignore
 
 # Logs
 logs/
@@ -124,4 +130,42 @@ coverage/
 # Backup files
 *.bak
 *.backup
-.vercel
+
+# Email service credentials (if stored locally)
+email-credentials.json
+gmail-credentials.json
+sendgrid-credentials.json
+
+# API keys and secrets (if stored locally)
+secrets.json
+api-keys.json
+credentials.json
+
+# Debug files
+debug-env.js
+debug-config.js
+
+# Local development files
+local-config.js
+dev-config.js
+
+# Temporary deployment files
+deploy-temp/
+temp-deploy/
+
+# SSL certificates (if any)
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# Local database files
+*.sql
+*.dump
+
+# IDE specific files
+.vscode/settings.json
+.idea/workspace.xml
+*.sublime-project
+*.sublime-workspace
