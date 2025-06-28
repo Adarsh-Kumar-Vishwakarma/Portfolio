@@ -7,6 +7,11 @@ import { toast } from 'sonner';
 import SystemStatusBar from './SystemStatusBar';
 import { useInView } from '../hooks/use-in-view';
 
+// API base URL configuration
+const API_BASE_URL = window.location.hostname === 'localhost'
+  ? 'http://localhost:3001/api'
+  : 'https://portfoliobackend-steel.vercel.app/api';
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -16,10 +21,8 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // API URL configuration for production/development environments
-  const API_URL = window.location.hostname === 'localhost'
-  ? 'http://localhost:3001/api/contact'
-  : 'https://portfolio-tawny-ten-95.vercel.app/api/contact';
+  // Use the correct endpoint for contact
+  const API_URL = `${API_BASE_URL}/contact`;
   
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
