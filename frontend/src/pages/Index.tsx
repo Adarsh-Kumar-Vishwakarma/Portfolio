@@ -5,6 +5,9 @@ import Projects from '../components/Projects';
 import Skills from '../components/Skills';
 import Contact from '../components/Contact';
 import Navigation from '../components/Navigation';
+import MatrixRain from '../components/MatrixRain';
+import Terminal from '../components/Terminal';
+import LiveStatsPanel from '../components/LiveStatsPanel';
 
 const Index = () => {
   // Theme switcher logic
@@ -18,7 +21,13 @@ const Index = () => {
   // }, [dark]);
 
   return (
-    <div className="min-h-screen bg-white text-[#181c23] dark:bg-[#181c23] dark:text-white flex flex-col">
+    <div className="min-h-screen bg-[var(--terminal-bg)] text-[var(--terminal-fg)] flex flex-col relative z-10">
+      <MatrixRain />
+      {/* <LiveStatsPanel /> */}
+      {/* <Terminal /> */}
+
+      {/* <LiveStatsPanel /> */}
+      {/* <TerminalInput /> */}
       {/* Theme Switcher Button */}
       {/* <button
         className="fixed top-4 right-4 z-[9999] bg-[#23272e] border-2 border-[#4fd1c5] text-[#4fd1c5] font-mono px-4 py-2 rounded-lg shadow-lg hover:bg-[#181c23] transition-colors duration-200"
