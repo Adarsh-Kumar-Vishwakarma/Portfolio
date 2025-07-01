@@ -12,6 +12,7 @@ import routes from './routes/index.js';
 import { apiRateLimiter } from './middleware/rateLimiter.js';
 // import emailService from './services/emailService.js';
 import gmailEmailService from './services/gmailEmailService.js';
+import { globalErrorHandler } from './middleware/errorHandler.js';
 
 // Load environment variables
 dotenv.config();
@@ -120,20 +121,7 @@ try {
 app.use('/', routes);
 
 // Global error handling middleware
-app.use((error, req, res, next) => {
-  console.error('❌ Global error handler:', error);
-  
-  // Don't leak error details in production
-  const errorMessage = NODE_ENV === 'production' 
-    ? 'Internal server error' 
-    : error.message;
-  
-  res.status(error.status || 500).json({
-    success: false,
-    message: errorMessage,
-    ...(NODE_ENV === 'development' && { stack: error.stack })
-  });
-});
+app.use(globalErrorHandler);
 
 // Graceful shutdown handling
 const gracefulShutdown = (signal) => {
