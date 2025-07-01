@@ -96,6 +96,7 @@ class GmailEmailService {
   }
 
   createContactEmailTemplate(contactData, fallback = false) {
+    const sentAt = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' }); 
     const { name, email, subject, message } = contactData;
 
     const fallbackNotice = fallback ? `
@@ -204,7 +205,7 @@ class GmailEmailService {
             <div class="message-box">${message.replace(/\n/g, '<br>')}</div>
           </div>
           <div class="footer">
-            <p>// This message was sent from your portfolio contact form at ${new Date().toLocaleString()}</p>
+            <p>// This message was sent from your portfolio contact form at ${sentAt}</p>
             <p>// Reply directly to this email to respond to <span style="color:#63b3ed;">${name}</span></p>
           </div>
         </div>

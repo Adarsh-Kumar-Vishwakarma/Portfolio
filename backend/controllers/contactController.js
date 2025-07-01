@@ -1,6 +1,7 @@
 // import emailService from '../services/emailService.js';
 
 import gmailEmailService from '../services/gmailEmailService.js';
+import { CustomError } from '../middleware/errorHandler.js';
 
 class ContactController {
   async sendContactMessage(req, res) {
@@ -58,19 +59,11 @@ class ContactController {
     //   }
 
         if (error.message.includes('GMAIL_APP_PASSWORD')) {
-            return res.status(503).json({
-            success: false,
-            message: 'Email service not configured. Please set up Gmail app password.',
-            error: 'EMAIL_SERVICE_ERROR'
-            });
+            throw new CustomError('Email service not configured. Please set up Gmail app password.', 503);
         }
 
       // Generic error response
-      res.status(500).json({
-        success: false,
-        message: 'Failed to send message. Please try again.',
-        error: 'INTERNAL_SERVER_ERROR'
-      });
+      throw new CustomError('Failed to send message. Please try again.', 500);
     }
   }
 
@@ -92,11 +85,7 @@ class ContactController {
 
       res.status(200).json(healthStatus);
     } catch (error) {
-      res.status(503).json({
-        status: 'unhealthy',
-        timestamp: new Date().toISOString(),
-        error: error.message
-      });
+      throw new CustomError(error.message, 503);
     }
   }
 }
