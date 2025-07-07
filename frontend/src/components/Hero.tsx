@@ -1,74 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import { Github, Linkedin, Mail, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useInView } from '../hooks/use-in-view';
 import Typewriter from './Typewriter';
 
 const Hero = () => {
-  const [heroRef, inView] = useInView<HTMLDivElement>({ threshold: 0.3 });
   const [step, setStep] = useState(0);
-  const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
-  const [show3, setShow3] = useState(false);
 
-  // Reset sequence when in view
+  // Step through the sequence only once on mount
   useEffect(() => {
-    if (!inView) return;
     setStep(0);
-    setShow1(false);
     setShow2(false);
-    setShow3(false);
-  }, [inView]);
+  }, []);
 
-  // Step through the sequence
   useEffect(() => {
-    if (!inView) return;
-    if (step === 0) {
-      setShow1(true);
-    }
     if (step === 1) {
       setShow2(true);
     }
-    if (step === 2) {
-      setShow3(true);
-    }
-  }, [step, inView]);
+  }, [step]);
 
   return (
     <section id="home" className="min-h-screen flex items-center justify-center bg-[#181c23] font-mono px-2 sm:px-0 mt-16 sm:mt-0">
       <div className="max-w-6xl mx-auto px-2 sm:px-4 sm:px-6 lg:px-8 text-center w-full">
-        <div className="animate-fade-in bg-[#23272e] border-2 border-[#4fd1c5] rounded-xl shadow-lg p-4 sm:p-10 relative overflow-hidden w-full" ref={heroRef}>
+        <div className="animate-fade-in bg-[#23272e] border-2 border-[#4fd1c5] rounded-xl shadow-lg p-4 sm:p-10 relative overflow-hidden w-full">
           <div className="absolute left-0 top-0 w-full flex items-center px-2 sm:px-4 py-2 bg-[#181c23] border-b border-[#4fd1c5] rounded-t-xl">
             <span className="text-[#4fd1c5] font-bold mr-2">$</span>
             <span className="text-[#63b3ed] tracking-wider text-xs sm:text-base">whoami</span>
           </div>
           <div className="mt-10 mb-6 text-center">
-            <div className="min-h-[2.5em]">
-              {show1 && (
-                <span className="text-[#4fd1c5]">
-                  <Typewriter
-                    text={'[System: Online] [Status: Ready] [Mode: Development]'}
-                    speed={28}
-                    onDone={() => setStep(1)}
-                  />
-                </span>
-              )}
-            </div>
             <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold mb-4 text-[#f6e05e] min-h-[2.5em]">
-              {show2 && (
-                <Typewriter
-                  text={"Hi, I'm Adarsh Kumar Vishwakarma"}
-                  speed={35}
-                  onDone={() => setStep(2)}
-                />
-              )}
+              <Typewriter
+                text={"Hi, I'm Adarsh Kumar Vishwakarma"}
+                speed={35}
+                onDone={() => setStep(1)}
+              />
             </h1>
             <p className="text-base sm:text-lg md:text-2xl text-[#a0aec0] mb-8 max-w-3xl mx-auto min-h-[2.5em]">
-              {show3 && (
+              {show2 && (
                 <Typewriter
                   text={"// Full-Stack Software Developer passionate about building scalable, innovative solutions."}
                   speed={18}
-                  onDone={() => setStep(3)}
+                  onDone={() => setStep(2)}
                 />
               )}
             </p>
@@ -110,4 +82,3 @@ const Hero = () => {
 };
 
 export default Hero;
-

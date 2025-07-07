@@ -20,6 +20,8 @@ const Contact = () => {
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [effectPlayed, setEffectPlayed] = useState(false);
+  const [typedIntro, setTypedIntro] = useState('');
 
   // Use the correct endpoint for contact
   const API_URL = `${API_BASE_URL}/contact`;
@@ -111,19 +113,24 @@ const Contact = () => {
 
   // Typewriter effect for the intro
   const introText = "# I'm always interested in new opportunities and exciting projects. Let's discuss how we can work together!";
-  const [typedIntro, setTypedIntro] = useState('');
   const [contactRef, inView] = useInView<HTMLDivElement>({ threshold: 0.3 });
   useEffect(() => {
-    if (!inView) return;
+    if (effectPlayed) {
+      setTypedIntro(introText);
+      return;
+    }
     let i = 0;
     setTypedIntro('');
     const interval = setInterval(() => {
       setTypedIntro(introText.slice(0, i + 1));
       i++;
-      if (i === introText.length) clearInterval(interval);
+      if (i === introText.length) {
+        clearInterval(interval);
+        setEffectPlayed(true);
+      }
     }, 12);
     return () => clearInterval(interval);
-  }, [inView]);
+  }, [effectPlayed]);
 
   return (
     <section className="py-10 sm:py-20 bg-[#181c23] font-mono px-2 sm:px-0 relative overflow-hidden">
@@ -143,7 +150,7 @@ const Contact = () => {
           </h2>
           <p className="text-base sm:text-xl text-[#a0aec0] max-w-3xl mx-auto min-h-[3.5em]">
             <span>{typedIntro}</span>
-            {typedIntro.length < introText.length && <span className="blinking-cursor">|</span>}
+            {typedIntro.length < introText.length && !effectPlayed && <span className="blinking-cursor">|</span>}
           </p>
         </div>
 

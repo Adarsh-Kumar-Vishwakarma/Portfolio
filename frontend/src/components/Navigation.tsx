@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import TAKVLogo from './TAKVLogo';
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,7 @@ const Navigation = () => {
           <div className="flex justify-between items-center py-4">
             <div className="flex items-center space-x-2">
               <span className="text-[#4fd1c5] font-bold text-2xl">$</span>
-              <span className="text-[#63b3ed] text-xl tracking-wider select-none">portfolio</span>
+              <TAKVLogo size={48} />
             </div>
             {/* Desktop Menu */}
             <div className="hidden md:flex space-x-8">
