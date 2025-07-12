@@ -8,12 +8,12 @@ const About = () => {
     {
       icon: <Code size={48} />,
       title: "Frontend Development",
-      description: "Creating responsive and interactive user interfaces using React, Vue, and modern CSS frameworks."
+      description: "Creating responsive and interactive user interfaces using Angular, and modern CSS frameworks."
     },
     {
       icon: <Server size={48} />,
       title: "Backend Development", 
-      description: "Building robust server-side applications with Node.js, Python, and cloud services."
+      description: "Building robust server-side applications with Node.js, Java, and cloud services."
     },
     {
       icon: <Database size={48} />,
@@ -29,7 +29,7 @@ const About = () => {
 
   const [effectPlayed, setEffectPlayed] = useState(false);
   const [typedIntro, setTypedIntro] = useState('');
-  const introText = "// I'm a passionate software developer with 5+ years of experience in building web and mobile solutions. I love turning complex problems into simple, beautiful, and intuitive solutions.";
+  const introText = "// I'm a passionate Junior Full-Stack Developer with 1+ years of hands-on experience crafting web solutions. I love turning complex challenges into clean, intuitive, and impactful user experiences.";
 
   useEffect(() => {
     if (effectPlayed) {
@@ -90,13 +90,16 @@ const About = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-lg sm:text-2xl font-bold text-[#f6e05e] mb-4">My Journey <span className="ml-2 text-[#4fd1c5] animate-pulse">$</span></h3>
-              <p className="text-[#a0aec0] mb-4 text-sm sm:text-base">// Started my career as a junior developer and have grown into a full-stack engineer working with startups and established companies. I'm always learning new technologies and staying up-to-date with industry trends.</p>
-              <p className="text-[#a0aec0] text-sm sm:text-base">// When I'm not coding, you can find me contributing to open-source projects, writing technical blogs, or exploring new coffee shops around the city.</p>
+              <p className="text-[#a0aec0] mb-4 text-sm sm:text-base">// I began my journey as a fresher and started my career as a Junior Software Developer. Over time, I have continuously learned new technologies and programming languages, and I am currently working as a Junior Full-Stack Developer.</p>
+              <p className="text-[#a0aec0] text-sm sm:text-base">// Outside of coding, I enjoy exploring emerging tech trends, contributing to personal projects, reading technical blogs, and spending time with spiritual books to stay balanced and mindful.</p>
             </div>
             <div className="flex justify-center mt-6 md:mt-0">
-              <div className="w-40 h-40 sm:w-64 sm:h-64 rounded-full border-4 border-[#4fd1c5] bg-[#181c23] flex items-center justify-center animate-pulse-slow">
-                {/* You can add a profile image here if you want */}
-                <span className="text-[#4fd1c5] text-4xl sm:text-6xl">&#60;/&#62;</span>
+              <div className="w-40 h-40 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-[#4fd1c5] bg-[#181c23] flex items-center justify-center animate-pulse-slow">
+                <img
+                  src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExdzM3d3lxdDQyMm93aWNvb2gyb3VuYTNuMnRlOWV6anBudHM3Nm9vcSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/nrGnowpysYkLL1AFyR/giphy.gif"
+                  alt="Profile GIF"
+                  className="w-full h-full object-cover object-center"
+                />
               </div>
             </div>
           </div>
