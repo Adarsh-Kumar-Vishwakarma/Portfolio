@@ -128,9 +128,9 @@ const Skills = () => {
               <h4 className="text-base sm:text-xl text-[#f6e05e] font-semibold">Junior Software Developer</h4>
               <p className="text-[#4fd1c5] text-xs sm:text-base">Edulab Educational Exchange Pvt. Ltd • 05 May 2025 - Present</p>
               <ul className="list-disc list-inside text-[#a0aec0] mt-2 text-xs sm:text-base">
-                <li>Currently working at Pashu Solapur University, contributing to the development and maintenance of microservices within the admissions domain</li>
-                <li>Focused on building and optimizing services related to course selection, application processing, and end-to-end admission workflows</li>
-                <li>Worked on the development of a new feature for the university's admission portal, which allows students to select their preferred courses and manage their application process</li>
+                <li>Currently working at Pashu Solapur University, contributing to the development and maintenance of microservices within the admissions domain.</li>
+                <li>Focused on building and optimizing services related to course selection, application processing, and end-to-end admission workflows.</li>
+                <li>Worked on the development of a new feature for the university's admission portal, which allows students to select their preferred courses and manage their application process.</li>
               </ul>
             </div>
             <div className="border-l-4 border-[#4fd1c5] pl-4">
