@@ -38,7 +38,7 @@ const Hero = () => {
             <p className="text-base sm:text-lg md:text-2xl text-[#a0aec0] mb-8 max-w-3xl mx-auto min-h-[2.5em]">
               {show2 && (
                 <Typewriter
-                  text={"// Full-Stack Software Developer passionate about building scalable, innovative solutions."}
+                  text={"// Junior Full-Stack Developer passionate about learning and building scalable, real-world solutions through hands-on experience."}
                   speed={18}
                   onDone={() => setStep(2)}
                 />
