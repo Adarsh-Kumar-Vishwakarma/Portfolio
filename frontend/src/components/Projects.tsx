@@ -14,28 +14,28 @@ const Projects = () => {
       githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/E-comm.git"
     },
     {
-      title: "Task Management App",
-      description: "A collaborative project management tool with real-time updates, drag-and-drop functionality, and team collaboration features.",
-      image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=600&h=400&fit=crop",
-      technologies: ["Vue.js", "Firebase", "Vuetify", "WebSockets"],
+      title: "Book Management System",
+      description: "A comprehensive Spring Boot REST API with complete CRUD operations for book management. Features MySQL database integration, JPA/Hibernate ORM, and RESTful endpoints demonstrating Spring Boot best practices.",
+      image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop",
+      technologies: ["Spring Boot", "Java 17", "MySQL", "JPA/Hibernate", "Maven"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/Book_Management_System.git"
     },
     {
-      title: "Weather Dashboard",
-      description: "A responsive weather application with location-based forecasts, interactive maps, and detailed weather analytics.",
-      image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=600&h=400&fit=crop",
-      technologies: ["React", "D3.js", "OpenWeather API", "Tailwind CSS"],
+      title: "FooKart - Food Ordering Web App",
+      description: "A modern Angular-based food ordering application with search, filtering, and shopping cart functionality. Features responsive design, tag-based filtering, and clean component architecture demonstrating Angular best practices.",
+      image: "https://images.unsplash.com/photo-1599250300435-b9693f21830d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fEZvb2QlMjBPcmRlcmluZyUyMEFwcHxlbnwwfHwwfHx8MA%3D%3D",
+      technologies: ["Angular 17", "TypeScript", "CSS", "Jasmine/Karma"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/FooKart.git"
     },
     {
-      title: "Social Media Analytics",
-      description: "A data visualization platform that analyzes social media trends and provides insights through interactive charts and graphs.",
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop",
-      technologies: ["Python", "Django", "Chart.js", "PostgreSQL"],
+      title: "Online Shopping Management System",
+      description: "A comprehensive Spring Boot REST API with advanced entity relationships, DTO patterns, and validation. Features Product-Order management with One-to-Many mappings, custom exception handling, and comprehensive CRUD operations.",
+      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop",
+      technologies: ["Spring Boot", "Java 17", "MySQL", "JPA/Hibernate", "Hibernate Validator"],
       liveUrl: "#",
-      githubUrl: "#"
+      githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/Online-Shopping-Management-SpringBoot.git"
     }
   ];
 
