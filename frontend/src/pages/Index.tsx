@@ -8,6 +8,7 @@ import Navigation from '../components/Navigation';
 import MatrixRain from '../components/MatrixRain';
 import Terminal from '../components/Terminal';
 import LiveStatsPanel from '../components/LiveStatsPanel';
+import Chatbot from '../components/Chatbot';
 
 const Index = () => {
   // Theme switcher logic
@@ -62,6 +63,9 @@ const Index = () => {
         <span className="text-[#63b3ed] tracking-wider">echo</span>
         <span className="ml-2">'© 2025 Adarsh Kumar Vishwakarma. All rights reserved.'</span>
       </footer>
+      
+      {/* AI Chatbot */}
+      <Chatbot />
     </div>
   );
 };
