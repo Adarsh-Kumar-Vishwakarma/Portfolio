@@ -62,6 +62,13 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 🚫 Reject specific email before proceeding
+    if (formData.email.toLowerCase() === 'adarshvish2606@gmail.com') {
+      terminalErrorToast('This email address is not allowed.', 'error');
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -200,7 +207,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <p className="text-[#a0aec0]">Location</p>
-                    <p className="text-[#f7fafc] font-semibold">Nalasopara, Mumbai</p>
+                    <p className="text-[#f7fafc] font-semibold">Nalasopara, Palghar</p>
                   </div>
                 </div>
               </div>
