@@ -1,5 +1,6 @@
 import express from 'express';
 import contactRoutes from './contactRoutes.js';
+import chatRoutes from './chat.js';
 
 const router = express.Router();
 
@@ -8,6 +9,8 @@ const API_VERSION = '/api';
 
 // Mount routes
 router.use(API_VERSION, contactRoutes);
+router.use(API_VERSION, chatRoutes);
+
 
 // Health check endpoint
 router.get('/health', (req, res) => {
