@@ -131,6 +131,9 @@ const Skills = () => {
                 <li>Currently working at Pashu Solapur University, contributing to the development and maintenance of microservices within the admissions domain.</li>
                 <li>Focused on building and optimizing services related to course selection, application processing, and end-to-end admission workflows.</li>
                 <li>Worked on the development of a new feature for the university's admission portal, which allows students to select their preferred courses and manage their application process.</li>
+                <li>IQAS (Institute of Actuarial and Quantitative Studies) – Admission Portal.</li>
+                <li>Worked on a smaller monolithic admission portal.</li>
+                <li>Added features for registration, document upload, and many other.</li>
               </ul>
             </div>
             <div className="border-l-4 border-[#4fd1c5] pl-4">
