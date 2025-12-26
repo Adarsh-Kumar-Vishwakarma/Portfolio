@@ -25,7 +25,7 @@ import { PieChart, Pie, Cell, Tooltip as ReTooltip, ResponsiveContainer } from '
 
 const API_BASE_URL = window.location.hostname === 'localhost'
   ? 'http://localhost:3001/api/chat'
-  : 'https://portfoliobackend-steel.vercel.app/api';
+  : 'https://portfoliobackend-steel.vercel.app/api/chat';
 
 // =====================
 // Types
