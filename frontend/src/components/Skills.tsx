@@ -128,23 +128,25 @@ const Skills = () => {
               <h4 className="text-base sm:text-xl text-[#f6e05e] font-semibold">Junior Software Developer</h4>
               <p className="text-[#4fd1c5] text-xs sm:text-base">Edulab Educational Exchange Pvt. Ltd • 05 May 2025 - Present</p>
               <ul className="list-disc list-inside text-[#a0aec0] mt-2 text-xs sm:text-base">
-                <li>Currently working at Pashu Solapur University, contributing to the development and maintenance of microservices within the admissions domain.</li>
-                <li>Focused on building and optimizing services related to course selection, application processing, and end-to-end admission workflows.</li>
-                <li>Worked on the development of a new feature for the university's admission portal, which allows students to select their preferred courses and manage their application process.</li>
-                <li>IQAS (Institute of Actuarial and Quantitative Studies) – Admission Portal.</li>
-                <li>Worked on a smaller monolithic admission portal.</li>
-                <li>Added features for registration, document upload, and many other.</li>
+                <li><b className="text-[#63b3ed] text-xs sm:text-base">Punyashlok Ahilyadevi Holkar Solapur University</b></li>
+                <li>I worked on the development and ongoing maintenance of the university’s Admissions Management System built on a microservices architecture.</li>
+                <li>My role involved designing and building RESTful microservices for key modules such as Payment, Hostel Management, and Examinations. I also integrated the Admissions service with the Payment module to ensure smooth and reliable data flow across the system.</li>
+                <li>In addition, I helped improve the student admission portal by introducing new features and automating workflows to make the process more efficient. I regularly handled bug fixes, optimized APIs, and worked on performance improvements to enhance system stability and user experience.</li>
+                <li><b className="text-[#63b3ed] text-xs sm:text-base">IQAS (Institute of Actuarial and Quantitative Studies) – Admission Portal</b></li>
+                <li>At IQAS, I worked on a monolithic admission portal where I contributed to building and improving core features.</li>
+                <li>This included implementing student registration, managing admission workflows, and adding email notification functionality.</li>
+                <li>I also focused on improving the overall UI/UX and resolving functional and performance-related issues to ensure a smoother experience for users.</li>
               </ul>
             </div>
             <div className="border-l-4 border-[#4fd1c5] pl-4">
               <h4 className="text-base sm:text-xl text-[#f6e05e] font-semibold">Software Developer</h4>
               <p className="text-[#4fd1c5] text-xs sm:text-base">New Era It Consultancy • Feb 2024 - Feb 2025</p>
               <ul className="list-disc list-inside text-[#a0aec0] mt-2 text-xs sm:text-base">
-                <li>Developed, deployed, and maintained Customer Relationship Management (CRM) software solutions for clients such as Reliance, Mapple, and iPlanet,creating streamlined and impactful products tailored to meet each client's specific needs.</li>
-                <li>Created user-friendly, efficient, and effective solutions with expertise in the Angular framework.</li>
-                <li>Collaborated closely with clients to deliver customized software solutions that address their unique requirements.</li>
-                <li>Gained hands-on experience with Angular fundamentals, including component creation, routing, API integration, and services, while also working with stored procedures in SQL for systematic data management.</li>
-                <li>Provided ongoing support for live projects, ensuring their seamless operation through troubleshooting, maintenance, and upgrades.</li>
+                <li>I worked on developing, deploying, and maintaining Customer Relationship Management (CRM) solutions for clients such as Reliance, Mapple, and iPlanet. My focus was on building streamlined and practical products that met each client’s specific business needs.</li>
+                <li>I primarily worked with the Angular framework to create user-friendly, efficient, and reliable interfaces.</li>
+                <li>I collaborated closely with clients and internal teams to understand requirements and deliver customized solutions that aligned with their expectations.</li>
+                <li>Through this role, I gained hands-on experience with core Angular concepts such as component development, routing, API integration, and services. I also worked with SQL stored procedures to support structured and efficient data management.</li>
+                <li>In addition, I provided ongoing support for live projects, handling troubleshooting, maintenance, and system upgrades to ensure smooth and uninterrupted operation.</li>
               </ul>
             </div>
           </div>
