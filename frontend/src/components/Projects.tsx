@@ -2,9 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { ExternalLink, Github } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import SystemStatusBar from './SystemStatusBar';
+import adivaImage from '../assets/AdivaAI.jpg';
 
 const Projects = () => {
   const projects = [
+    {
+      title: "Adiva AI",
+      description: "Built a full-stack using React, TypeScript, Tailwind CSS, Node.js, Express, and MongoDB, supporting real-time AI responses, multiple AI models (OpenAI GPT, Claude), image analysis, and persistent chat history. Implemented secure authentication with Google OAuth and JWT, usage analytics, and a modern, responsive UI with dynamic theming and smooth animations. The platform allows users to have seamless, interactive AI conversations, with intelligent responses, customizable prompts, and reliable performance for both casual and professional use.",
+      image: adivaImage,
+      technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
+      liveUrl: "#",
+      githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/Adiva-AI.git"
+    },
     {
       title: "E-Commerce Platform",
       description: "A full-featured e-commerce platform built with Angular and JSON Server. Includes user authentication, product management, and a responsive UI. Easily run locally with 'ng serve' and mock backend via JSON Server for development and testing.",
@@ -93,7 +102,7 @@ const Projects = () => {
                 <img 
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-40 sm:h-48 object-cover group-hover:scale-105 transition-transform duration-300 border-b-2 border-[#4fd1c5]"
+                  className="w-full h-40 sm:h-48 object-contain group-hover:scale-105 transition-transform duration-300 border-b-2 border-[#4fd1c5]"
                 />
                 <div className="absolute inset-0 bg-[#4fd1c5] bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
               </div>
