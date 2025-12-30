@@ -1,13 +1,13 @@
 import React from 'react';
 
-const TAKVLogo = ({ size = 40 }) => (
+const TAKVLogo = ({ size = 40, className = "" }) => (
   <svg
     width={size}
     height={size * 0.33}
     viewBox="0 0 120 40"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="inline-block align-middle"
+    className={`inline-block align-middle ${className}`}
   >
     <text
       x="0"
