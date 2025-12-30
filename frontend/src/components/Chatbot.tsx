@@ -18,6 +18,7 @@ import {
   Download,
   RefreshCw,
   Settings2,
+  X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -89,7 +90,10 @@ const ChatAI: React.FC = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const recognitionRef = useRef<any>(null);
   const synthesisRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const chatAIRef = useRef<HTMLDivElement>(null);
+  const [keyboardOpen, setKeyboardOpen] = useState(false);
+  const [scrolledUp, setScrolledUp] = useState(false);
 
   // =====================
   // Static portfolio data (authoritative context)
@@ -107,6 +111,12 @@ const ChatAI: React.FC = () => {
       tools: ['Git', 'VS Code', 'Postman', 'Jenkins', 'Jira', 'Grafana', 'Docker', 'Keycloak', 'RabbitMQ', 'GitHub', 'SendGrid']
     },
     projects: [
+      {
+        title: "Adiva AI",
+        description: "Built a full-stack using React, TypeScript, Tailwind CSS, Node.js, Express, and MongoDB, supporting real-time AI responses, multiple AI models (OpenAI GPT, Claude), image analysis, and persistent chat history. Implemented secure authentication with Google OAuth and JWT, usage analytics, and a modern, responsive UI with dynamic theming and smooth animations. The platform allows users to have seamless, interactive AI conversations, with intelligent responses, customizable prompts, and reliable performance for both casual and professional use.",
+        technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
+        githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/Adiva-AI.git"
+      },
       {
         title: 'E-Commerce Platform',
         description: 'Full-featured e-commerce platform with Angular and JSON Server. Includes user authentication, product management, and responsive UI.',
@@ -201,15 +211,28 @@ const ChatAI: React.FC = () => {
     }
   }, []);
 
-  // Speech synthesis
+  // Speech synthesis + load voices
   useEffect(() => {
-    if ('speechSynthesis' in window) {
-      synthesisRef.current = new SpeechSynthesisUtterance();
-      synthesisRef.current.rate = 0.95;
-      synthesisRef.current.pitch = 1;
-      synthesisRef.current.volume = 0.9;
-    }
+    if (!('speechSynthesis' in window)) return;
+
+    const loadVoices = () => {
+      const availableVoices = window.speechSynthesis.getVoices();
+      setVoices(availableVoices);
+    };
+
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+
+    synthesisRef.current = new SpeechSynthesisUtterance();
+    synthesisRef.current.rate = 0.95;
+    synthesisRef.current.pitch = 1.1; // 👈 slightly higher = more feminine
+    synthesisRef.current.volume = 0.9;
+
+    return () => {
+      window.speechSynthesis.onvoiceschanged = null;
+    };
   }, []);
+
 
   useEffect(() => {
     if (!speakMode && 'speechSynthesis' in window) {
@@ -217,16 +240,33 @@ const ChatAI: React.FC = () => {
       setIsSpeaking(false);
     }
   }, [speakMode]);
-  
+
 
   const speakText = (text: string) => {
-    if (synthesisRef.current && 'speechSynthesis' in window) {
-      setIsSpeaking(true);
-      synthesisRef.current.text = text;
-      synthesisRef.current.onend = () => setIsSpeaking(false);
-      window.speechSynthesis.speak(synthesisRef.current);
-    }
+    if (!synthesisRef.current || !('speechSynthesis' in window)) return;
+
+    window.speechSynthesis.cancel();
+
+    const femaleVoice =
+      voices.find(v =>
+        v.name.toLowerCase().includes('aria') ||     // Windows (best)
+        v.name.toLowerCase().includes('zira') ||     // Windows
+        v.name.toLowerCase().includes('samantha') || // macOS
+        v.name.toLowerCase().includes('karen') ||
+        v.name.toLowerCase().includes('female')
+      ) ||
+      voices.find(v => v.lang.startsWith('en')) ||
+      voices[0];
+
+    synthesisRef.current.voice = femaleVoice || null;
+    synthesisRef.current.text = text;
+
+    synthesisRef.current.onstart = () => setIsSpeaking(true);
+    synthesisRef.current.onend = () => setIsSpeaking(false);
+
+    window.speechSynthesis.speak(synthesisRef.current);
   };
+
 
   // =====================
   // Analytics helpers
@@ -260,6 +300,24 @@ const ChatAI: React.FC = () => {
       localStorage.setItem("chatAI_analytics", JSON.stringify(analytics));
     } catch { }
   }, [analytics]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const viewportH = window.visualViewport?.height || window.innerHeight;
+      const screenH = window.screen.height;
+
+      setKeyboardOpen(viewportH < screenH * 0.75);
+    };
+
+    window.visualViewport?.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.visualViewport?.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
 
   // =====================
   // Dynamic + Defensive Brain
@@ -415,6 +473,12 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
     }
 
     // Specific project matches
+    const adivaAIProject = portfolioData.projects.find(p => p.title.toLowerCase().includes('e-commerce'));
+    if (adivaAIProject && (m.includes('adiva') || m.includes('adiva ai'))) {
+      const text = `${adivaAIProject.title}: ${adivaAIProject.description} Built with ${adivaAIProject.technologies.join(', ')}. Check it out: ${adivaAIProject.githubUrl}`;
+      return { text, meta: { defenseQuality: 'low', hallucinationRisk: 'low', tone: personality } };
+    }
+
     const ecommerceProject = portfolioData.projects.find(p => p.title.toLowerCase().includes('e-commerce'));
     if (ecommerceProject && (m.includes('ecommerce') || m.includes('e-commerce'))) {
       const text = `${ecommerceProject.title}: ${ecommerceProject.description} Built with ${ecommerceProject.technologies.join(', ')}. Check it out: ${ecommerceProject.githubUrl}`;
@@ -611,15 +675,15 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
   return (
     <TooltipProvider>
       {/* Floating Chat Button */}
-      <Button
-        onClick={() => setIsOpen(!isOpen)}
-        onMouseEnter={() => !isOpen && setIsOpen(true)}
-        className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-[#4fd1c5] hover:bg-[#38b2ac] border-2 border-[#2d3748] shadow-lg transition-all duration-300 chatbot-button relative"
-        style={{ pointerEvents: "auto" }}
-        aria-label="Open chat"
-      >
-        <MessageCircle className="h-6 w-6" />
-      </Button>
+      {!isOpen && (
+        <Button
+          onClick={() => setIsOpen(true)}
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 h-12 w-12 sm:h-14 sm:w-14 rounded-full bg-[#4fd1c5] hover:bg-[#38b2ac] border-2 border-[#2d3748] shadow-lg transition-all duration-300 chatbot-button"
+          aria-label="Open chat"
+        >
+          <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6" />
+        </Button>
+      )}
 
       {/* Chat Window */}
       {isOpen && (
@@ -627,82 +691,86 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
           <div className="fixed inset-0 bg-black/30 backdrop-blur-sm z-30" />
           <Card
             ref={chatAIRef}
-            className="fixed bottom-28 right-6 z-40 w-96 h-[34rem] bg-[#181c23] border-2 border-[#4fd1c5] shadow-2xl rounded-xl overflow-visible"
+            className="fixed bottom-20 right-4 left-4 sm:bottom-28 sm:right-6 sm:left-auto z-40 w-auto sm:w-[25rem] h-[calc(100vh-5rem)] sm:h-[34rem] flex flex-col max-h-[600px] sm:max-h-none bg-[#181c23] border-2 border-[#4fd1c5] shadow-2xl rounded-xl overflow-hidden"
             role="dialog"
             aria-label="AI chat window"
           >
-            <CardHeader className="bg-gradient-to-r from-[#23272e] to-[#2d3748] border-b-2 border-[#4fd1c5] p-3 rounded-tl-xl rounded-tr-xl">
-              <CardTitle className="text-[#4fd1c5] font-mono text-base flex items-center gap-3">
-                <AIIcon className="h-5 w-5" />AI Assistant
-                <div className="ml-auto flex items-center gap-2">
-                  {/* Defensive mode */}
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        onClick={() => setDefensiveMode((v) => !v)}
-                        className={cn(
-                          "relative bg-[#181c23] hover:bg-[#2d3748] text-[#4fd1c5] border border-[#4fd1c5] h-8 px-2 rounded-md flex items-center gap-1 transition-all duration-200 hover:scale-110 ",
-                          defensiveMode && "bg-[#2d3748] border-[#f6e05e]"
-                        )}
-                        title={defensiveMode ? "Defensive mode: ON" : "Defensive mode: OFF"}
-                      >
-                        <ShieldCheck className="h-4 w-4" />
-                        <span className="text-xs">Defend</span>
-                        {defensiveMode && (
-                          <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#f6e05e] rounded-full animate-pulse" />
-                        )}
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Anticipate pushback and add short defenses.</TooltipContent>
-                  </Tooltip>
+            <CardHeader className="bg-gradient-to-r from-[#23272e] to-[#2d3748] border-b-2 border-[#4fd1c5] p-2 sm:p-3 rounded-tl-xl rounded-tr-xl flex-shrink-0">
+              <CardTitle className="text-[#4fd1c5] font-mono text-sm sm:text-base">
+                <div className="flex items-center justify-between w-full">
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    <AIIcon className="h-4 w-4 sm:h-5 sm:w-5" />
+                    <span>AI Assistant</span>
+                  </div>
+                  <div className="flex items-center gap-1 sm:gap-2 flex-wrap justify-end">
+                    {/* Defensive mode */}
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={() => setDefensiveMode((v) => !v)}
+                          className={cn(
+                            "relative bg-[#181c23] hover:bg-[#2d3748] text-[#4fd1c5] border border-[#4fd1c5] h-7 sm:h-8 px-1.5 sm:px-2 rounded-md flex items-center gap-1 transition-all duration-200 hover:scale-110 ",
+                            defensiveMode && "bg-[#2d3748] border-[#f6e05e]"
+                          )}
+                          title={defensiveMode ? "Defensive mode: ON" : "Defensive mode: OFF"}
+                        >
+                          <ShieldCheck className="h-3 w-3 sm:h-4 sm:w-4" />
+                          <span className="text-[10px] sm:text-xs hidden sm:inline">Defend</span>
+                          {defensiveMode && (
+                            <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#f6e05e] rounded-full animate-pulse" />
+                          )}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Anticipate pushback and add short defenses.</TooltipContent>
+                    </Tooltip>
 
-                  {/* Personality cycle */}
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        onClick={() => {
-                          const order: Message["meta"]["tone"][] = [
-                            "friendly",
-                            "logical",
-                            "playful",
-                            "confident",
-                          ];
-                          const idx = order.indexOf(personality);
-                          setPersonality(order[(idx + 1) % order.length] as any);
-                        }}
-                        className="relative bg-[#181c23] hover:bg-[#2d3748] text-[#f6e05e] border border-[#4fd1c5] h-8 px-2 rounded-md flex items-center gap-1 transition-all duration-200 hover:scale-110"
-                        title={`Personality: ${personality}`}
-                      >
-                        <Sparkles className="h-4 w-4" />
-                        <span className="text-xs capitalize">{personality}</span>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Cycle response tone</TooltipContent>
-                  </Tooltip>
+                    {/* Personality cycle */}
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={() => {
+                            const order: Message["meta"]["tone"][] = [
+                              "friendly",
+                              "logical",
+                              "playful",
+                              "confident",
+                            ];
+                            const idx = order.indexOf(personality);
+                            setPersonality(order[(idx + 1) % order.length] as any);
+                          }}
+                          className="relative bg-[#181c23] hover:bg-[#2d3748] text-[#f6e05e] border border-[#4fd1c5] h-7 sm:h-8 px-1.5 sm:px-2 rounded-md flex items-center gap-1 transition-all duration-200 hover:scale-110"
+                          title={`Personality: ${personality}`}
+                        >
+                          <Sparkles className="h-3 w-3 sm:h-4 sm:w-4" />
+                          <span className="text-[10px] sm:text-xs capitalize hidden sm:inline">{personality}</span>
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Cycle response tone</TooltipContent>
+                    </Tooltip>
 
-                  {/* Analytics */}
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        onClick={() => setShowAnalytics(!showAnalytics)}
-                        className={cn(
-                          "bg-[#181c23] hover:bg-[#2d3748] text-[#4fd1c5] border border-[#4fd1c5] p-2 h-8 w-8 rounded-md transition-all duration-200 hover:scale-110 relative",
-                          showAnalytics && "bg-[#2d3748] border-[#f6e05e]"
-                        )}
-                        title="Analytics"
-                        aria-pressed={showAnalytics}
-                      >
-                        <BarChart3 className="h-4 w-4" />
-                        {showAnalytics && (
-                          <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#f6e05e] rounded-full animate-pulse" />
-                        )}
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Toggle chat analytics</TooltipContent>
-                  </Tooltip>
+                    {/* Analytics */}
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={() => setShowAnalytics(!showAnalytics)}
+                          className={cn(
+                            "bg-[#181c23] hover:bg-[#2d3748] text-[#4fd1c5] border border-[#4fd1c5] p-1.5 sm:p-2 h-7 w-7 sm:h-8 sm:w-8 rounded-md transition-all duration-200 hover:scale-110 relative",
+                            showAnalytics && "bg-[#2d3748] border-[#f6e05e]"
+                          )}
+                          title="Analytics"
+                          aria-pressed={showAnalytics}
+                        >
+                          <BarChart3 className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                          {showAnalytics && (
+                            <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#f6e05e] rounded-full animate-pulse" />
+                          )}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Toggle chat analytics</TooltipContent>
+                    </Tooltip>
 
-                  {/* Settings quick actions */}
-                  {/* <Tooltip>
+                    {/* Settings quick actions */}
+                    {/* <Tooltip>
                     <TooltipTrigger asChild>
                       <Button
                         onClick={downloadTranscript}
@@ -715,38 +783,46 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
                     <TooltipContent>Download transcript</TooltipContent>
                   </Tooltip> */}
 
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        onClick={() => setSpeakMode((v) => !v)}
-                        className={cn(
-                          "relative bg-[#181c23] hover:bg-[#2d3748] border h-8 px-2 rounded-md flex items-center gap-1 transition-all duration-200 hover:scale-110",
-                          speakMode
-                            ? "text-[#68d391] border-[#68d391] bg-[#2d3748]"
-                            : "text-[#a0aec0] border-[#4a5568]"
-                        )}
-                        aria-pressed={speakMode}
-                        title={speakMode ? "Speak mode: ON" : "Speak mode: OFF"}
-                      >
-                        {/* {speakMode ? (
-                          <Mic className="h-4 w-4" />
-                        ) : (
-                          <MicOff className="h-4 w-4" />
-                        )} */}
-                        <span className="text-xs">Speak</span>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={() => setSpeakMode((v) => !v)}
+                          className={cn(
+                            "relative bg-[#181c23] hover:bg-[#2d3748] border h-7 sm:h-8 px-1.5 sm:px-2 rounded-md flex items-center gap-1 transition-all duration-200 hover:scale-110",
+                            speakMode
+                              ? "text-[#68d391] border-[#68d391] bg-[#2d3748]"
+                              : "text-[#a0aec0] border-[#4a5568]"
+                          )}
+                          aria-pressed={speakMode}
+                          title={speakMode ? "Speak mode: ON" : "Speak mode: OFF"}
+                        >
+                          <span className="text-[10px] sm:text-xs">Speak</span>
 
-                        {speakMode && (
-                          <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#68d391] rounded-full animate-pulse" />
-                        )}
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                      {speakMode ? "AI will speak replies" : "AI will stay silent"}
-                    </TooltipContent>
-                  </Tooltip>
+                          {speakMode && (
+                            <div className="absolute -top-1 -right-1 w-2 h-2 bg-[#68d391] rounded-full animate-pulse" />
+                          )}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {speakMode ? "AI will speak replies" : "AI will stay silent"}
+                      </TooltipContent>
+                    </Tooltip>
 
-                  <Tooltip>
-                    {/* <TooltipTrigger asChild>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          onClick={() => setIsOpen(false)}
+                          className="bg-[#181c23] hover:bg-[#2d3748] text-[#f56565] border border-[#f56565] h-7 sm:h-8 w-7 sm:w-8 rounded-md transition-all duration-200 hover:scale-110"
+                          aria-label="Close chat"
+                        >
+                          <X className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Close chat</TooltipContent>
+                    </Tooltip>
+
+                    <Tooltip>
+                      {/* <TooltipTrigger asChild>
                       <Button
                         onClick={resetConversation}
                         className="bg-[#181c23] hover:bg-[#2d3748] text-[#f56565] border border-[#f56565] p-2 h-8 w-8 rounded-md"
@@ -755,25 +831,26 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
                         <RefreshCw className="h-4 w-4" />
                       </Button>
                     </TooltipTrigger> */}
-                    <TooltipContent>Reset conversation</TooltipContent>
-                  </Tooltip>
+                      <TooltipContent>Reset conversation</TooltipContent>
+                    </Tooltip>
+                  </div>
                 </div>
               </CardTitle>
             </CardHeader>
 
-            <CardContent className="p-0 h-full flex flex-col overflow-hidden">
+            <CardContent className="p-0 flex flex-col flex-1 min-h-0 overflow-hidden">
               {showAnalytics ? (
-                <div className="flex-1 p-4 bg-[#181c23] analytics-slide">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-[#f6e05e] font-mono text-sm">📊 Chat Analytics</h3>
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-[#a0aec0]">Defend</span>
+                <div className="flex-1 p-3 sm:p-4 bg-[#181c23] analytics-slide">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <h3 className="text-[#f6e05e] font-mono text-xs sm:text-sm">📊 Chat Analytics</h3>
+                    <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <span className="text-[10px] sm:text-xs text-[#a0aec0]">Defend</span>
                         <Switch checked={defensiveMode} onCheckedChange={setDefensiveMode} />
                       </div>
                       <Button
                         onClick={() => setShowAnalytics(false)}
-                        className="bg-[#2d3748] hover:bg-[#4a5568] text-[#68d391] border border-[#4a5568] p-1 h-7 rounded text-xs transition-all duration-200 hover:scale-105"
+                        className="bg-[#2d3748] hover:bg-[#4a5568] text-[#68d391] border border-[#4a5568] p-1 h-6 sm:h-7 rounded text-[10px] sm:text-xs transition-all duration-200 hover:scale-105"
                         title="Back to Chat"
                       >
                         ← Back
@@ -781,24 +858,24 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-3 text-xs">
+                  <div className="grid grid-cols-2 gap-2 sm:gap-3 text-[10px] sm:text-xs">
                     <div className="bg-[#2d3748] p-3 rounded-lg border border-[#4a5568]">
                       <div className="flex justify-between mb-1"><span className="text-[#a0aec0]">Total</span><span className="text-[#4fd1c5] font-bold">{analytics.totalMessages}</span></div>
                       <div className="flex justify-between mb-1"><span className="text-[#a0aec0]">User</span><span className="text-[#68d391] font-bold">{analytics.userMessages}</span></div>
                       <div className="flex justify-between"><span className="text-[#a0aec0]">AI</span><span className="text-[#f6e05e] font-bold">{analytics.AIMessages}</span></div>
                     </div>
 
-                    <div className="bg-[#2d3748] p-3 rounded-lg border border-[#4a5568] h-[140px]">
-                      <span className="text-[#a0aec0] block mb-2">Popular Topics</span>
-                      <div className="w-full h-[95px]">
+                    <div className="bg-[#2d3748] p-2 sm:p-3 rounded-lg border border-[#4a5568] h-[120px] sm:h-[140px]">
+                      <span className="text-[#a0aec0] block mb-1.5 sm:mb-2 text-[10px] sm:text-xs">Popular Topics</span>
+                      <div className="w-full h-[85px] sm:h-[95px]">
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
                             <Pie
                               data={getPopularTopics()}
                               dataKey="value"
                               nameKey="name"
-                              outerRadius={42}
-                              innerRadius={22}
+                              outerRadius={35}
+                              innerRadius={18}
                               isAnimationActive
                             >
                               {getPopularTopics().map((entry, index) => (
@@ -812,23 +889,28 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
                     </div>
                   </div>
 
-                  <div className="mt-3 text-[11px] text-[#718096]">
-                    <div>Session started: {new Date(analytics.sessionStart).toLocaleString()}</div>
-                    <div className="flex items-center gap-2 mt-2">
-                      <Settings2 className="h-3.5 w-3.5" />
+                  <div className="mt-2 sm:mt-3 text-[10px] sm:text-[11px] text-[#718096]">
+                    <div className="break-words">Session started: {new Date(analytics.sessionStart).toLocaleString()}</div>
+                    <div className="flex items-center gap-1.5 sm:gap-2 mt-1.5 sm:mt-2">
+                      <Settings2 className="h-3 w-3 sm:h-3.5 sm:w-3.5" />
                       <span>Personality: <span className="capitalize text-[#e2e8f0]">{personality}</span></span>
                     </div>
                   </div>
                 </div>
               ) : (
-                <ScrollArea className="flex-1 p-4" style={{ scrollbarWidth: "none", msOverflowStyle: "none", overflow: "auto" }}>
-                  <div className="space-y-4">
+                <ScrollArea
+                  className="flex-1 min-h-0 overflow-y-auto"
+                  onScroll={(e) => {
+                    const el = e.currentTarget;
+                    setScrolledUp(el.scrollTop > 8);
+                  }}
+                >                  <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-2 space-y-3 sm:space-y-4">
                     {messages.map((m) => (
-                      <div key={m.id} className={cn("flex gap-3", m.sender === "user" ? "justify-end" : "justify-start")}
+                      <div key={m.id} className={cn("flex gap-2 sm:gap-3", m.sender === "user" ? "justify-end" : "justify-start")}
                       >
                         {m.sender === "AI" && (
-                          <div className="w-7 h-7 rounded-full bg-[#4fd1c5] flex items-center justify-center flex-shrink-0">
-                            <AIIcon className="h-4 w-4 text-[#181c23]" />
+                          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#4fd1c5] flex items-center justify-center flex-shrink-0">
+                            <AIIcon className="h-3 w-3 sm:h-4 sm:w-4 text-[#181c23]" />
                           </div>
                         )}
 
@@ -837,24 +919,24 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.18 }}
                           className={cn(
-                            "max-w-[85%] p-3 rounded-lg text-sm relative shadow-sm",
+                            "max-w-[85%] p-2.5 sm:p-3 rounded-lg text-xs sm:text-sm relative shadow-sm",
                             m.sender === "user"
                               ? "bg-[#4fd1c5] text-[#181c23] font-mono rounded-br-md"
                               : "bg-[#2d3748] text-[#e2e8f0] font-mono border border-[#4a5568] rounded-bl-md"
                           )}
                         >
-                          <div className="whitespace-pre-line leading-relaxed">{m.text}</div>
+                          <div className="whitespace-pre-line leading-relaxed break-words">{m.text}</div>
 
                           {m.isAI && m.meta?.defenseQuality && (
                             <>
-                              <div className="mt-2 text-[10px] opacity-80">
+                              <div className="mt-1.5 sm:mt-2 text-[9px] sm:text-[10px] opacity-80">
                                 <span>🧠 Tone: {m.meta.tone}</span>
-                                <span className="mx-2">•</span>
+                                <span className="mx-1 sm:mx-2">•</span>
                                 <span>🛡️ Defense: {m.meta.defenseQuality}</span>
-                                <span className="mx-2">•</span>
+                                <span className="mx-1 sm:mx-2">•</span>
                                 <span>🎯 Risk: {m.meta.hallucinationRisk}</span>
                               </div>
-                              <div className="absolute -top-1 -right-1 bg-[#f6e05e] text-[#181c23] text-xs px-1.5 py-0.5 rounded-full ai-badge">
+                              <div className="absolute -top-1 -right-1 bg-[#f6e05e] text-[#181c23] text-[10px] sm:text-xs px-1 sm:px-1.5 py-0.5 rounded-full ai-badge">
                                 AI
                               </div>
                             </>
@@ -862,32 +944,32 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
                         </motion.div>
 
                         {m.sender === "user" && (
-                          <div className="w-7 h-7 rounded-full bg-[#4fd1c5] flex items-center justify-center flex-shrink-0">
-                            <UserIcon className="h-4 w-4 text-[#181c23]" />
+                          <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#4fd1c5] flex items-center justify-center flex-shrink-0">
+                            <UserIcon className="h-3 w-3 sm:h-4 sm:w-4 text-[#181c23]" />
                           </div>
                         )}
                       </div>
                     ))}
 
                     {isTyping && (
-                      <div className="flex gap-3 justify-start">
-                        <div className="w-7 h-7 rounded-full bg-[#4fd1c5] flex items-center justify-center flex-shrink-0">
-                          <AIIcon className="h-4 w-4 text-[#181c23]" />
+                      <div className="flex gap-2 sm:gap-3 justify-start">
+                        <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#4fd1c5] flex items-center justify-center flex-shrink-0">
+                          <AIIcon className="h-3 w-3 sm:h-4 sm:w-4 text-[#181c23]" />
                         </div>
-                        <div className="bg-[#2d3748] text-[#e2e8f0] font-mono border border-[#4a5568] p-3 rounded-lg text-sm">
-                          <span className="animate-pulse text-[#e2e8f0] font-mono text-sm">
-                            Thinking<span className="loading-dots">.</span>
+                        <div className="bg-[#2d3748] text-[#e2e8f0] font-mono border border-[#4a5568] p-2.5 sm:p-3 rounded-lg text-xs sm:text-sm">
+                          <span className="animate-pulse text-[#e2e8f0] font-mono text-xs sm:text-sm">
+                            <span className="loading-dots"></span>
                           </span>
                         </div>
                       </div>
                     )}
 
                     {error && (
-                      <div className="flex items-center gap-2 text-xs text-red-300 bg-red-900/20 border border-red-700/40 p-2 rounded">
-                        <span>⚠️ {error}</span>
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs text-red-300 bg-red-900/20 border border-red-700/40 p-1.5 sm:p-2 rounded">
+                        <span className="break-words">⚠️ {error}</span>
                         <Button
                           size="sm"
-                          className="h-6 px-2 bg-[#181c23] hover:bg-[#2d3748] text-[#f6e05e] border border-[#f6e05e]"
+                          className="h-5 sm:h-6 px-1.5 sm:px-2 bg-[#181c23] hover:bg-[#2d3748] text-[#f6e05e] border border-[#f6e05e] text-[10px] sm:text-xs"
                           onClick={handleSendMessage}
                           disabled={isTyping || retryCount > 2}
                         >
@@ -896,63 +978,74 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
                       </div>
                     )}
                   </div>
-                  <div ref={messagesEndRef} />
+                  <div ref={messagesEndRef} className="h-0" />
                 </ScrollArea>
               )}
 
               {/* Composer */}
-              <div className="p-4 mb-[3.6rem] border-t border-[#4a5568] bg-[#23272e] rounded-bl-xl rounded-br-xl">
+              <motion.div
+                layout
+                transition={{ duration: 0.25, ease: 'easeInOut' }}
+                className={cn(
+                  "p-2 sm:p-4 bg-[#23272e] rounded-bl-xl rounded-br-xl flex-shrink-0 transition-shadow",
+                  scrolledUp && "shadow-[0_-6px_16px_rgba(0,0,0,0.35)]"
+                )}
+                style={{
+                  paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 0.5rem)',
+                }}
+              >
                 {/* Quick Actions */}
-                <div className="grid grid-cols-4 gap-2 mb-3">
-                  {quickActions.map((qa) => (
-                    <Button
-                      key={qa.label}
-                      onClick={() => handleQuickAction(qa.query)}
-                      disabled={isTyping}
-                      className="bg-[#181c23] hover:bg-[#2d3748] text-[#4fd1c5] border border-[#4fd1c5] font-mono text-[11px] h-8 rounded-md"
-                    >
-                      {qa.label}
-                    </Button>
-                  ))}
-                </div>
+                <motion.div
+                  initial={false}
+                  animate={{
+                    height: keyboardOpen ? 0 : 'auto',
+                    opacity: keyboardOpen ? 0 : 1,
+                  }}
+                  transition={{ duration: 0.25, ease: 'easeInOut' }}
+                  className="overflow-hidden"
+                >
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                    {quickActions.map((qa) => (
+                      <Button
+                        key={qa.label}
+                        onClick={() => handleQuickAction(qa.query)}
+                        disabled={isTyping}
+                        className="bg-[#181c23] hover:bg-[#2d3748] text-[#4fd1c5] border border-[#4fd1c5] font-mono text-[10px] sm:text-[11px] h-7 sm:h-8 rounded-md"
+                      >
+                        {qa.label}
+                      </Button>
+                    ))}
+                  </div>
+                </motion.div>
 
-                <div className="flex gap-3 items-center">
+                {/* Input Row */}
+                <div className="flex gap-2 sm:gap-3 items-center">
                   <Input
                     ref={inputRef}
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={handleKeyPress}
                     placeholder="Ask something…"
-                    className="flex-1 bg-[#181c23] border-2 border-[#4fd1c5] text-[#e2e8f0] font-mono text-sm placeholder:text-[#718096] focus:border-[#4fd1c5] focus:ring-2 focus:ring-[#4fd1c5] focus:ring-opacity-20 rounded-lg h-11"
+                    className="flex-1 bg-[#181c23] border-2 border-[#4fd1c5] text-[#e2e8f0] font-mono text-xs sm:text-sm placeholder:text-[#718096] rounded-lg h-9 sm:h-11"
                   />
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        onClick={toggleVoiceInput}
-                        disabled={isTyping}
-                        className={cn(
-                          "bg-[#181c23] hover:bg-[#2d3748] text-[#4fd1c5] border border-[#4fd1c5] px-3 h-11 w-11 rounded-lg",
-                          isListening && "bg-[#f56565] text-white border-[#f56565]"
-                        )}
-                        title="Voice Input"
-                        aria-pressed={isListening}
-                      >
-                        {isListening ? <MicOff className="h-5 w-5" /> : <Mic className="h-5 w-5" />}
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>Dictate with your voice</TooltipContent>
-                  </Tooltip>
+
+                  <Button
+                    onClick={toggleVoiceInput}
+                    disabled={isTyping}
+                    className="bg-[#181c23] hover:bg-[#2d3748] text-[#4fd1c5] border border-[#4fd1c5] h-9 w-9 sm:h-11 sm:w-11 rounded-lg"
+                  >
+                    {isListening ? <MicOff /> : <Mic />}
+                  </Button>
 
                   <Button
                     onClick={handleSendMessage}
                     disabled={!inputValue.trim() || isTyping}
-                    className="bg-[#4fd1c5] hover:bg-[#38b2ac] text-[#181c23] font-mono px-3 h-11 w-11 rounded-full disabled:opacity-50"
-                    aria-label="Send message"
+                    className="bg-[#4fd1c5] hover:bg-[#38b2ac] text-[#181c23] h-9 w-9 sm:h-11 sm:w-11 rounded-full"
                   >
-                    <Send className="h-5 w-5" />
+                    <Send />
                   </Button>
                 </div>
-              </div>
+              </motion.div>
             </CardContent>
           </Card>
         </>

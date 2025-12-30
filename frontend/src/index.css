@@ -131,12 +131,19 @@
     z-index: 1;
     color: #4fd1c5;
     font-family: 'Fira Mono', 'Consolas', monospace;
-    font-size: clamp(0.8rem, 2vw, 1.2rem);
-    opacity: 0.2;
+    font-size: clamp(0.6rem, 1.5vw, 1.2rem);
+    opacity: 0.15;
     pointer-events: none;
     animation: codeFloat 16s linear infinite;
     display: inline;
     white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .code-float {
+      font-size: 0.5rem;
+      opacity: 0.1;
+    }
   }
 
   @keyframes codeFloat {

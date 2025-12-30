@@ -38,17 +38,17 @@ const Index = () => {
       >
         {dark ? '🌙 Terminal Dark' : '☀️ Classic Light'}
       </button> */}
-      {/* Floating code characters for hacker/dev background */}
-      <span className="code-float" style={{left: '5vw', animationDelay: '0s'}}>0xDEADBEEF</span>
-      <span className="code-float" style={{left: '15vw', animationDelay: '2s'}}>&lt;script&gt;</span>
-      <span className="code-float" style={{left: '25vw', animationDelay: '4s'}}>console.log('👾')</span>
-      <span className="code-float" style={{left: '35vw', animationDelay: '6s'}}>sudo rm -rf /</span>
-      <span className="code-float" style={{left: '45vw', animationDelay: '8s'}}>#include &lt;hacker.h&gt;</span>
-      <span className="code-float" style={{left: '55vw', animationDelay: '1s'}}>npm install life</span>
-      <span className="code-float" style={{left: '65vw', animationDelay: '3s'}}>while(alive)</span>
-      <span className="code-float" style={{left: '75vw', animationDelay: '5s'}}>git commit -m "🚀"</span>
-      <span className="code-float" style={{left: '85vw', animationDelay: '7s'}}>function hack(){}</span>
-      <span className="code-float" style={{left: '95vw', animationDelay: '9s'}}>SELECT * FROM skills;</span>
+      {/* Floating code characters for hacker/dev background - hidden on very small screens */}
+      <span className="code-float hidden sm:inline" style={{left: '5vw', animationDelay: '0s'}}>0xDEADBEEF</span>
+      <span className="code-float hidden sm:inline" style={{left: '15vw', animationDelay: '2s'}}>&lt;script&gt;</span>
+      <span className="code-float hidden md:inline" style={{left: '25vw', animationDelay: '4s'}}>console.log('👾')</span>
+      <span className="code-float hidden sm:inline" style={{left: '35vw', animationDelay: '6s'}}>sudo rm -rf /</span>
+      <span className="code-float hidden lg:inline" style={{left: '45vw', animationDelay: '8s'}}>#include &lt;hacker.h&gt;</span>
+      <span className="code-float hidden md:inline" style={{left: '55vw', animationDelay: '1s'}}>npm install life</span>
+      <span className="code-float hidden sm:inline" style={{left: '65vw', animationDelay: '3s'}}>while(alive)</span>
+      <span className="code-float hidden lg:inline" style={{left: '75vw', animationDelay: '5s'}}>git commit -m "🚀"</span>
+      <span className="code-float hidden md:inline" style={{left: '85vw', animationDelay: '7s'}}>function hack(){}</span>
+      <span className="code-float hidden lg:inline" style={{left: '95vw', animationDelay: '9s'}}>SELECT * FROM skills;</span>
       <Navigation />
       <main className="flex-grow">
         <Hero />
@@ -58,10 +58,10 @@ const Index = () => {
         <Contact />
       </main>
       {/* Terminal-style Footer */}
-      <footer className="w-full bg-[#181c23] border-t-2 border-[#4fd1c5] py-4 text-center font-mono text-xs text-[#a0aec0]">
-        <span className="text-[#4fd1c5] font-bold mr-2">$</span>
+      <footer className="w-full bg-[#181c23] border-t-2 border-[#4fd1c5] py-3 sm:py-4 text-center font-mono text-xs text-[#a0aec0] px-2">
+        <span className="text-[#4fd1c5] font-bold mr-1 sm:mr-2">$</span>
         <span className="text-[#63b3ed] tracking-wider">echo</span>
-        <span className="ml-2">'© 2025 Adarsh Kumar Vishwakarma. All rights reserved.'</span>
+        <span className="ml-1 sm:ml-2 text-[10px] sm:text-xs">'© 2025 Adarsh Kumar Vishwakarma. All rights reserved.'</span>
       </footer>
       
       {/* AI Chatbot */}

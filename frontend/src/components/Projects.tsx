@@ -71,51 +71,51 @@ const Projects = () => {
   }, [effectPlayed]);
 
   return (
-    <section className="py-10 sm:py-20 bg-[#181c23] font-mono px-2 sm:px-0 relative overflow-hidden">
+    <section className="py-8 sm:py-12 md:py-16 lg:py-20 bg-[#181c23] font-mono px-2 sm:px-0 relative overflow-hidden">
       {/* Animated grid/scanline overlay */}
       <div className="pointer-events-none absolute inset-0 z-0 opacity-30" style={{backgroundImage: 'repeating-linear-gradient(to bottom, #4fd1c511 0px, #4fd1c511 1px, transparent 1px, transparent 24px), repeating-linear-gradient(to right, #4fd1c511 0px, #4fd1c511 1px, transparent 1px, transparent 24px)'}} />
-      <div className="max-w-6xl mx-auto px-2 sm:px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-10 sm:mb-16">
-          <div id="projects" className="inline-block bg-[#23272e] border-2 border-[#4fd1c5] rounded-t-xl px-4 sm:px-6 py-2 mb-2 scroll-mt-20 flex flex-col items-center gap-2">
+      <div className="max-w-6xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <div id="projects" className="inline-block bg-[#23272e] border-2 border-[#4fd1c5] rounded-t-xl px-3 sm:px-4 md:px-6 py-2 mb-2 scroll-mt-20 flex flex-col items-center gap-2">
             <div className="flex items-center gap-2">
-              <span className="text-[#4fd1c5] font-bold">$</span>
-              <span className="text-[#63b3ed] tracking-wider text-xs sm:text-base">ls projects/</span>
+              <span className="text-[#4fd1c5] font-bold text-xs sm:text-sm">$</span>
+              <span className="text-[#63b3ed] tracking-wider text-xs sm:text-sm md:text-base">ls projects/</span>
             </div>
             <SystemStatusBar />
           </div>
-          <h2 className="text-2xl sm:text-4xl font-bold text-[#f6e05e] mb-4 mt-2 flex items-center justify-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-[#f6e05e] mb-3 sm:mb-4 mt-2 flex items-center justify-center px-2">
             Featured Projects <span className="ml-2 animate-pulse">|</span>
           </h2>
-          <p className="text-base sm:text-xl text-[#a0aec0] max-w-3xl mx-auto min-h-[3.5em]">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-[#a0aec0] max-w-3xl mx-auto min-h-[2.5em] sm:min-h-[3em] md:min-h-[3.5em] px-2">
             <span>{typedIntro}</span>
             {typedIntro.length < introText.length && !effectPlayed && <span className="blinking-cursor">|</span>}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
           {projects.map((project, index) => (
             <div 
               key={index}
-              className="bg-[#23272e] border-2 border-[#4fd1c5] rounded-xl overflow-hidden hover:border-[#f6e05e] transition-colors duration-300 group shadow-lg font-mono mb-6 md:mb-0"
+              className="bg-[#23272e] border-2 border-[#4fd1c5] rounded-xl overflow-hidden hover:border-[#f6e05e] transition-colors duration-300 group shadow-lg font-mono"
             >
               <div className="relative overflow-hidden">
                 <img 
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-40 sm:h-48 object-contain group-hover:scale-105 transition-transform duration-300 border-b-2 border-[#4fd1c5]"
+                  className="w-full h-32 sm:h-40 md:h-44 lg:h-48 object-contain group-hover:scale-105 transition-transform duration-300 border-b-2 border-[#4fd1c5] bg-[#181c23]"
                 />
                 <div className="absolute inset-0 bg-[#4fd1c5] bg-opacity-0 group-hover:bg-opacity-10 transition-all duration-300"></div>
               </div>
               
-              <div className="p-4 sm:p-6">
-                <h3 className="text-lg sm:text-xl font-bold text-[#f6e05e] mb-3">{project.title}</h3>
-                <p className="text-[#a0aec0] mb-4 text-sm sm:text-base">{project.description}</p>
+              <div className="p-3 sm:p-4 md:p-6">
+                <h3 className="text-base sm:text-lg md:text-xl font-bold text-[#f6e05e] mb-2 sm:mb-3">{project.title}</h3>
+                <p className="text-[#a0aec0] mb-3 sm:mb-4 text-xs sm:text-sm md:text-base leading-relaxed line-clamp-4 sm:line-clamp-none">{project.description}</p>
                 
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-3 sm:mb-4">
                   {project.technologies.map((tech, techIndex) => (
                     <span 
                       key={techIndex}
-                      className="px-2 sm:px-3 py-1 bg-[#181c23] text-[#4fd1c5] border border-[#4fd1c5] text-xs sm:text-sm rounded-full font-mono"
+                      className="px-2 sm:px-2.5 md:px-3 py-0.5 sm:py-1 bg-[#181c23] text-[#4fd1c5] border border-[#4fd1c5] text-xs sm:text-sm rounded-full font-mono"
                     >
                       {tech}
                     </span>
@@ -123,14 +123,6 @@ const Projects = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-                  {/* <Button 
-                    variant="outline" 
-                    size="sm"
-                    className="w-full sm:w-auto border-[#4fd1c5] text-[#4fd1c5] hover:bg-[#4fd1c5] hover:text-[#181c23] font-mono"
-                  >
-                    <ExternalLink className="mr-2" size={16} />
-                    Live Demo
-                  </Button> */}
                   <a
                     href={project.githubUrl}
                     target="_blank"
@@ -140,9 +132,9 @@ const Projects = () => {
                     <Button 
                       variant="outline" 
                       size="sm"
-                      className="w-full sm:w-auto border-[#a0aec0] text-[#a0aec0] hover:bg-[#a0aec0] hover:text-[#181c23] font-mono"
+                      className="w-full sm:w-auto border-[#a0aec0] text-[#a0aec0] hover:bg-[#a0aec0] hover:text-[#181c23] font-mono text-xs sm:text-sm"
                     >
-                      <Github className="mr-2" size={16} />
+                      <Github className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                       Code
                     </Button>
                   </a>
