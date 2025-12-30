@@ -38,7 +38,7 @@ const Hero = () => {
             <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-[#a0aec0] mb-6 sm:mb-8 max-w-3xl mx-auto min-h-[2em] sm:min-h-[2.5em] md:min-h-[3em] px-2">
               {show2 && (
                 <Typewriter
-                  text={"// Junior Full-Stack Developer passionate about learning and building scalable, real-world solutions through hands-on experience."}
+                  text={"// I am a Software Developer who genuinely enjoys building software and solving real-world problems. I like working across both frontend and backend, developing APIs, improving user experiences, and making systems more reliable and efficient. I’ve contributed to projects such as university admission platforms and CRM systems, and I enjoy collaborating with teams to turn ideas into working, high-quality solutions."}
                   speed={18}
                   onDone={() => setStep(2)}
                 />
