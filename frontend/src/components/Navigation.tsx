@@ -44,13 +44,13 @@ const Navigation = () => {
               ))}
             </div>
             {/* Mobile Menu Button */}
-            <button
+            {/* <button
               className="md:hidden text-[#a0aec0] hover:text-[#4fd1c5] transition-colors p-2"
               onClick={() => setIsOpen(!isOpen)}
               aria-label="Toggle menu"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
+            </button> */}
           </div>
           {/* Mobile Menu */}
           {isOpen && (
