@@ -11,8 +11,8 @@ const Projects = () => {
       description: "Built a full-stack using React, TypeScript, Tailwind CSS, Node.js, Express, and MongoDB, supporting real-time AI responses, multiple AI models (OpenAI GPT, Claude), image analysis, and persistent chat history. Implemented secure authentication with Google OAuth and JWT, usage analytics, and a modern, responsive UI with dynamic theming and smooth animations. The platform allows users to have seamless, interactive AI conversations, with intelligent responses, customizable prompts, and reliable performance for both casual and professional use.",
       image: adivaImage,
       technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express", "MongoDB"],
-      liveUrl: "#",
-      githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/Adiva-AI.git"
+      liveUrl: "https://adiva-ai.vercel.app/",
+      githubUrl: "https://github.com/TheAdarshKumarVishwakarma/Adiva-AI.git"
     },
     {
       title: "E-Commerce Platform",
@@ -20,7 +20,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop",
       technologies: ["Angular", "JSON Server"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/E-comm.git"
+      githubUrl: "https://github.com/TheAdarshKumarVishwakarma/E-comm.git"
     },
     {
       title: "Book Management System",
@@ -28,7 +28,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=600&h=400&fit=crop",
       technologies: ["Spring Boot", "Java 17", "MySQL", "JPA/Hibernate", "Maven"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/Book_Management_System.git"
+      githubUrl: "https://github.com/TheAdarshKumarVishwakarma/Book_Management_System.git"
     },
     {
       title: "FooKart - Food Ordering Web App",
@@ -36,7 +36,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1599250300435-b9693f21830d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzF8fEZvb2QlMjBPcmRlcmluZyUyMEFwcHxlbnwwfHwwfHx8MA%3D%3D",
       technologies: ["Angular 17", "TypeScript", "CSS", "Jasmine/Karma"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/FooKart.git"
+      githubUrl: "https://github.com/TheAdarshKumarVishwakarma/FooKart.git"
     },
     {
       title: "Online Shopping Management System",
@@ -44,7 +44,7 @@ const Projects = () => {
       image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop",
       technologies: ["Spring Boot", "Java 17", "MySQL", "JPA/Hibernate", "Hibernate Validator"],
       liveUrl: "#",
-      githubUrl: "https://github.com/Adarsh-Kumar-Vishwakarma/Online-Shopping-Management-SpringBoot.git"
+      githubUrl: "https://github.com/TheAdarshKumarVishwakarma/Online-Shopping-Management-SpringBoot.git"
     }
   ];
 
