@@ -123,6 +123,23 @@ const Projects = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                  {project.liveUrl !== "#" && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto"
+                    >
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="w-full sm:w-auto border-[#4fd1c5] text-[#4fd1c5] hover:bg-[#4fd1c5] hover:text-[#181c23] font-mono"
+                      >
+                        <ExternalLink className="mr-2" size={16} />
+                        Live Demo
+                      </Button>
+                    </a>
+                  )}
                   <a
                     href={project.githubUrl}
                     target="_blank"
