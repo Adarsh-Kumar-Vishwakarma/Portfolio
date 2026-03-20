@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
 const messages = [
-  '[System: Online] [Status: Ready] [Connection: Secure]',
-  '[Fetching data...]',
-  '[Compiling projects...]',
-  '[Connection established]',
-  '[All systems operational]',
-  '[Syncing with GitHub...]',
-  '[Last login: ' + new Date().toLocaleString() + ']',
+  'Portfolio systems online',
+  'Responsive experience optimized',
+  'Projects indexed and ready',
+  'Contact channel secured',
+  'AI assistant connected',
+  `Last sync ${new Date().toLocaleTimeString()}`,
 ];
 
 function formatUptime(seconds: number) {
@@ -25,38 +24,29 @@ const SystemStatusBar = () => {
     const msgInterval = setInterval(() => {
       setMsgIdx((idx) => (idx + 1) % messages.length);
     }, 3500);
+
     return () => clearInterval(msgInterval);
   }, []);
 
   useEffect(() => {
     const uptimeInterval = setInterval(() => {
-      setUptime((u) => u + 1);
+      setUptime((value) => value + 1);
     }, 1000);
+
     return () => clearInterval(uptimeInterval);
   }, []);
 
   return (
-    <div className="w-full flex flex-wrap items-center gap-1.5 sm:gap-2 md:gap-3 px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 bg-[#23272e] font-mono text-[10px] sm:text-xs md:text-sm rounded-t-xl select-none">
-      {/* Status lights */}
-      <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-400 animate-pulse mr-0.5 sm:mr-1" />
-      <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-yellow-400 animate-pulse-slow mr-0.5 sm:mr-1" />
-      <span className="inline-block w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-red-400 animate-pulse-slower mr-1 sm:mr-2 md:mr-3" />
-      {/* Rotating message */}
-      <span className="text-[#4fd1c5] truncate flex-1 min-w-0">{messages[msgIdx]}</span>
-      <span className="mx-1 sm:mx-2 text-[#f6e05e] hidden sm:inline">|</span>
-      {/* Uptime */}
-      <span className="text-[#63b3ed] whitespace-nowrap">Uptime: {formatUptime(uptime)}</span>
-      {/* Blinking dot */}
-      <span className="ml-1 sm:ml-2 text-[#f6e05e] animate-blink hidden sm:inline">●</span>
-      <style>{`
-        .animate-pulse-slow { animation: pulse 2.5s cubic-bezier(0.4,0,0.6,1) infinite; }
-        .animate-pulse-slower { animation: pulse 4s cubic-bezier(0.4,0,0.6,1) infinite; }
-        @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.5;} }
-        .animate-blink { animation: blink 1s steps(2,start) infinite; }
-        @keyframes blink { to { visibility: hidden; } }
-      `}</style>
+    <div className="flex w-full flex-wrap items-center gap-3 rounded-2xl border border-white/10 bg-slate-950/50 px-4 py-3 text-xs text-slate-300 shadow-inner shadow-cyan-950/20 backdrop-blur">
+      <div className="flex items-center gap-2">
+        <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_18px_rgba(74,222,128,0.8)]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-sky-400 shadow-[0_0_18px_rgba(56,189,248,0.75)]" />
+        <span className="h-2.5 w-2.5 rounded-full bg-amber-300 shadow-[0_0_18px_rgba(252,211,77,0.75)]" />
+      </div>
+      <span className="mono-text flex-1 truncate text-cyan-200">{messages[msgIdx]}</span>
+      <span className="mono-text whitespace-nowrap text-slate-400">Uptime {formatUptime(uptime)}</span>
     </div>
   );
 };
 
-export default SystemStatusBar; 
+export default SystemStatusBar;
