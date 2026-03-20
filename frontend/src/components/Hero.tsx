@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Github, Linkedin, Mail, Download } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Github, Linkedin, Mail, Download, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Typewriter from './Typewriter';
 
@@ -7,7 +7,6 @@ const Hero = () => {
   const [step, setStep] = useState(0);
   const [show2, setShow2] = useState(false);
 
-  // Step through the sequence only once on mount
   useEffect(() => {
     setStep(0);
     setShow2(false);
@@ -20,64 +19,129 @@ const Hero = () => {
   }, [step]);
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center bg-[#181c23] font-mono px-2 sm:px-0 pt-20 sm:pt-24 md:pt-0">
-      <div className="max-w-6xl mx-auto px-2 sm:px-4 md:px-6 lg:px-8 text-center w-full">
-        <div className="animate-fade-in bg-[#23272e] border-2 border-[#4fd1c5] rounded-xl shadow-lg p-3 sm:p-6 md:p-8 lg:p-10 relative overflow-hidden w-full">
-          <div className="absolute left-0 top-0 w-full flex items-center px-2 sm:px-3 md:px-4 py-1.5 sm:py-2 bg-[#181c23] border-b border-[#4fd1c5] rounded-t-xl">
-            <span className="text-[#4fd1c5] font-bold mr-1 sm:mr-2 text-xs sm:text-sm md:text-base">$</span>
-            <span className="text-[#63b3ed] tracking-wider text-xs sm:text-sm md:text-base">whoami</span>
-          </div>
-          <div className="mt-8 sm:mt-10 md:mt-12 mb-4 sm:mb-6 text-center">
-            <h1 className="text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 sm:mb-4 text-[#f6e05e] min-h-[1.5em] sm:min-h-[2em] md:min-h-[2.5em] px-2">
-              <Typewriter
-                text={"Hi, I'm Adarsh Kumar Vishwakarma"}
-                speed={35}
-                onDone={() => setStep(1)}
-              />
-            </h1>
-            <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-[#a0aec0] mb-6 sm:mb-8 max-w-3xl mx-auto min-h-[2em] sm:min-h-[2.5em] md:min-h-[3em] px-2">
-              {show2 && (
+    <section id="home" className="section-shell flex min-h-screen items-center">
+      <div className="section-inner">
+        <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16">
+          <div>
+            <div className="section-kicker">
+              <span className="section-kicker-dot" />
+              Welcome to my portfolio
+            </div>
+            {/* <h1 className="mt-6 max-w-4xl text-5xl font-bold tracking-[-0.05em] text-white sm:text-6xl lg:text-7xl">
+              <span className="block text-slate-200">Building elegant</span>
+              <span className="block bg-gradient-to-r from-cyan-300 via-sky-400 to-amber-300 bg-clip-text text-transparent">
+                digital experiences
+              </span>
+            </h1> */}
+            <div className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
+              <h2 className="min-h-[3.5rem] text-2xl font-semibold text-white sm:min-h-[4rem] sm:text-3xl">
                 <Typewriter
-                  text={"// Software Developer with over 2 years of experience in building scalable web applications using Angular, Node.js, and MySQL. Skilled in developing RESTful APIs and microservices architecture."}
-                  speed={18}
-                  onDone={() => setStep(2)}
+                  text={"Hi, I'm Adarsh Kumar Vishwakarma"}
+                  speed={35}
+                  onDone={() => setStep(1)}
                 />
-              )}
-            </p>
+              </h2>
+              <div className="mt-4 min-h-[6rem]">
+                {show2 && (
+                  <Typewriter
+                    text={
+                      '// Full Stack Developer with over 2 years of experience in building scalable web applications using Angular, Node.js, and MySQL. Skilled in developing RESTful APIs and microservices architecture. Experienced in delivering practical business solutions and improving system efficiency through clean, maintainable code.'
+                    }
+                    speed={18}
+                    onDone={() => setStep(2)}
+                  />
+                )}
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-col gap-4 sm:flex-row">
+              <Button
+                size="lg"
+                className="h-14 rounded-full bg-gradient-to-r from-cyan-300 to-sky-400 px-8 text-base font-semibold text-slate-950 hover:from-cyan-200 hover:to-sky-300"
+                onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                View My Work
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button
+                variant="outline"
+                size="lg"
+                className="h-14 rounded-full border-white/15 bg-white/5 px-8 text-base text-slate-100 hover:bg-white/10"
+                onClick={() =>
+                  window.open(
+                    'https://drive.google.com/drive/folders/1-sm3QRCtvDvGz7AWPcP_yV0aMX_V_5-t?usp=sharing',
+                    '_blank'
+                  )
+                }
+              >
+                <Download className="mr-2 h-5 w-5" />
+                Download Resume
+              </Button>
+            </div>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <a
+                href="https://github.com/Adarsh-Kumar-Vishwakarma"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:-translate-y-0.5 hover:border-cyan-300/40 hover:text-cyan-200"
+                aria-label="GitHub"
+              >
+                <Github size={20} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/adarsh-kumar-vishwakarma-6ba71a192/"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:-translate-y-0.5 hover:border-cyan-300/40 hover:text-cyan-200"
+                aria-label="LinkedIn"
+              >
+                <Linkedin size={20} />
+              </a>
+              <a
+                href="mailto:adarshvish2606@gmail.com?subject=Contact%20from%20Portfolio&body=Hi%20Adarsh,"
+                className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:-translate-y-0.5 hover:border-cyan-300/40 hover:text-cyan-200"
+                aria-label="Email"
+              >
+                <Mail size={20} />
+              </a>
+            </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-8 sm:mb-12 w-full px-2">
-            <Button
-              size="lg"
-              className="w-full sm:w-auto bg-[#4fd1c5] hover:bg-[#63b3ed] text-[#181c23] font-bold px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base md:text-lg font-mono transition-colors duration-200"
-              onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              View My Work
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="w-full sm:w-auto border-[#4fd1c5] text-[#4fd1c5] hover:bg-[#4fd1c5] hover:text-[#181c23] px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base md:text-lg font-mono"
-              onClick={() => window.open('https://drive.google.com/drive/folders/1-sm3QRCtvDvGz7AWPcP_yV0aMX_V_5-t?usp=sharing', '_blank')}
-            >
-              <Download className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              <span className="hidden sm:inline">Download Resume</span>
-              <span className="sm:hidden">Resume</span>
-            </Button>
+
+          <div className="glass-panel relative overflow-hidden rounded-[2rem] p-6 sm:p-8">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(103,232,249,0.22),transparent_30%),radial-gradient(circle_at_bottom_left,rgba(251,191,36,0.16),transparent_26%)]" />
+            <div className="relative space-y-6">
+              <div className="rounded-3xl border border-white/10 bg-slate-950/50 p-6">
+                <p className="mono-text text-xs uppercase tracking-[0.3em] text-cyan-200">Core profile</p>
+                <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                  <div className="metric-pill">
+                    <p className="metric-label">Experience</p>
+                    <p className="metric-value">2 Years</p>
+                  </div>
+                  <div className="metric-pill">
+                    <p className="metric-label">Focus</p>
+                    <p className="metric-value">Full Stack Developer</p>
+                  </div>
+                  {/* <div className="metric-pill">
+                    <p className="metric-label">Frontend</p>
+                    <p className="metric-value">Angular</p>
+                  </div>
+                  <div className="metric-pill">
+                    <p className="metric-label">Backend</p>
+                    <p className="metric-value">Node, Java</p>
+                  </div> */}
+                </div>
+              </div>
+
+              <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-6">
+                <p className="mono-text text-xs uppercase tracking-[0.3em] text-amber-200">What I bring</p>
+                <ul className="mt-4 space-y-4 text-sm leading-7 text-slate-300">
+                  <li>Scalable web applications using Angular, Node.js, and MySQL.</li>
+                  <li>RESTful API development and microservices architecture experience.</li>
+                  <li>A strong focus on reliable delivery and practical problem-solving.</li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div className="flex justify-center space-x-4 sm:space-x-6 mb-4 sm:mb-6">
-            <a href="https://github.com/Adarsh-Kumar-Vishwakarma" className="text-[#a0aec0] hover:text-[#4fd1c5] transition-colors duration-200" aria-label="GitHub">
-              <Github size={24} className="sm:w-8 sm:h-8" />
-            </a>
-            <a href="https://www.linkedin.com/in/adarsh-kumar-vishwakarma-6ba71a192/" className="text-[#a0aec0] hover:text-[#4fd1c5] transition-colors duration-200" aria-label="LinkedIn">
-              <Linkedin size={24} className="sm:w-8 sm:h-8" />
-            </a>
-            <a href="mailto:adarshvish2606@gmail.com?subject=Contact%20from%20Portfolio&body=Hi%20Adarsh," className="text-[#a0aec0] hover:text-[#4fd1c5] transition-colors duration-200" aria-label="Email">
-              <Mail size={24} className="sm:w-8 sm:h-8" />
-            </a>
-          </div>
-          <div className="mt-4 sm:mt-6 md:mt-8 text-center text-[#718096] text-xs px-2">// Welcome to my digital terminal portfolio.</div>
         </div>
       </div>
+      <div className="section-divider" />
     </section>
   );
 };
