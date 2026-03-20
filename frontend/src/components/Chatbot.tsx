@@ -691,7 +691,7 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
           <div className="fixed inset-0 z-30 bg-slate-950/45 backdrop-blur-md" />
           <Card
             ref={chatAIRef}
-            className="fixed bottom-20 left-4 right-4 z-40 flex h-[calc(100vh-5rem)] max-h-[680px] w-auto flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.96),rgba(8,15,28,0.96))] shadow-[0_32px_100px_rgba(2,8,23,0.6)] backdrop-blur-2xl sm:bottom-6 sm:left-auto sm:right-6 sm:top-28 sm:h-auto sm:max-h-[calc(100vh-8rem)] sm:w-[28rem]"
+            className="fixed left-4 right-4 top-28 bottom-4 z-40 flex h-auto max-h-[calc(100vh-8rem)] w-auto flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.96),rgba(8,15,28,0.96))] shadow-[0_32px_100px_rgba(2,8,23,0.6)] backdrop-blur-2xl sm:bottom-6 sm:left-auto sm:right-6 sm:top-28 sm:max-h-[calc(100vh-8rem)] sm:w-[28rem]"
             role="dialog"
             aria-label="AI chat window"
           >
@@ -1061,4 +1061,5 @@ Ensure the JSON is valid. No Markdown, no backticks.`;
 };
 
 export default ChatAI;
+
 
